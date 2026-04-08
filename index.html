@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Mal-Angabe Werkstatt</title>
+  <meta
+    name="description"
+    content="Interaktive Lernwerkstatt zu Mal-Angaben mit vier Niveaus, Modulfreischaltung, Sofortfeedback und Lehrer*innen-Dashboard."
+  >
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="ambient ambient-a"></div>
+  <div class="ambient ambient-b"></div>
+
+  <div class="app-shell">
+    <header class="hero surface">
+      <div class="hero-copy">
+        <p class="eyebrow">Interaktive DaZ-Lernwerkstatt</p>
+        <h1>Mal-Angabe</h1>
+        <p class="hero-lead">
+          Vier Niveaus, gestufte Rückmeldung und klare Freischaltlogik: Lernende arbeiten sich
+          Modul für Modul durch Freitext, Drag and Drop, Lückentext, Fehlertext und Erklärungen.
+        </p>
+        <div class="hero-tags">
+          <span>4 Niveaus</span>
+          <span>8 Module</span>
+          <span>40 Aufgaben</span>
+          <span>ab 60 % freigeschaltet</span>
+          <span>Lehrer*innen-Dashboard</span>
+          <span>Bronze · Silber · Gold</span>
+        </div>
+      </div>
+
+      <aside class="hero-side surface-inset">
+        <h2>Feedbacklogik</h2>
+        <ul class="hero-list">
+          <li>1. Fehler: nur "falsch"</li>
+          <li>2. Fehler: Tipp</li>
+          <li>3. Fehler: Musterlösung mit genauer Erklärung</li>
+          <li>Fortschritt pro Schüler*in lokal gespeichert</li>
+        </ul>
+      </aside>
+    </header>
+
+    <main class="view-stack">
+      <section id="identityView" class="surface identity-panel">
+        <div class="section-head">
+          <div>
+            <p class="section-label">Anmeldung</p>
+            <h2>Mit Namen registrieren</h2>
+          </div>
+          <button id="openTeacherButton" class="button button-ghost" type="button">Lehrer*innen-Dashboard</button>
+        </div>
+
+        <div class="identity-grid">
+          <article class="surface-inset register-card">
+            <h3>Neue Registrierung</h3>
+            <label class="field-label" for="studentNameInput">Name</label>
+            <input id="studentNameInput" class="text-field" type="text" autocomplete="name" placeholder="z. B. Aylin Kaya">
+            <button id="registerButton" class="button button-primary" type="button">Profil anlegen</button>
+            <p class="helper-text">
+              Jede Schülerin und jeder Schüler arbeitet mit einem eigenen Namen und einem eigenen Lernstand.
+            </p>
+          </article>
+
+          <article class="surface-inset existing-card">
+            <h3>Vorhandene Profile</h3>
+            <div id="studentList" class="student-list"></div>
+          </article>
+        </div>
+      </section>
+
+      <section id="studentDashboardView" class="surface" hidden>
+        <div class="section-head">
+          <div>
+            <p class="section-label">Lernstand</p>
+            <h2 id="studentDashboardTitle">Werkstatt</h2>
+          </div>
+          <div class="toolbar-row">
+            <button id="switchStudentButton" class="button button-ghost" type="button">Profil wechseln</button>
+            <button id="studentTeacherButton" class="button button-secondary" type="button">Lehrer*innen-Dashboard</button>
+            <button id="resetStudentButton" class="button button-ghost" type="button">Fortschritt löschen</button>
+          </div>
+        </div>
+
+        <div class="metric-row" id="studentMetrics"></div>
+
+        <div class="meter-block top-meter">
+          <div class="meter-head">
+            <span>Werkstattfortschritt</span>
+            <strong id="studentProgressText">0 / 8 Module</strong>
+          </div>
+          <div class="meter-track">
+            <div id="studentProgressBar" class="meter-fill"></div>
+          </div>
+        </div>
+
+        <div id="levelSections" class="level-sections"></div>
+      </section>
+
+      <section id="sessionView" class="view-stack" hidden>
+        <div class="session-topbar">
+          <button id="backToDashboardButton" class="button button-ghost" type="button">Zur Übersicht</button>
+          <div class="session-badges">
+            <span id="sessionLevelBadge" class="badge badge-outline"></span>
+            <span id="sessionModuleBadge" class="badge badge-outline"></span>
+            <span id="sessionTypeBadge" class="badge badge-outline"></span>
+          </div>
+        </div>
+
+        <div class="session-layout">
+          <aside class="surface session-side">
+            <div class="section-head compact">
+              <div>
+                <p class="section-label">Aktive Arbeit</p>
+                <h2 id="sessionStudentName">-</h2>
+              </div>
+            </div>
+
+            <div class="status-stack">
+              <div class="status-card surface-inset">
+                <span class="status-label">Modulfortschritt</span>
+                <strong id="sessionTaskCounter">0 / 0</strong>
+              </div>
+              <div class="status-card surface-inset">
+                <span class="status-label">Richtige Antworten</span>
+                <strong id="sessionCorrectCounter">0</strong>
+              </div>
+              <div class="status-card surface-inset">
+                <span class="status-label">Versuch</span>
+                <strong id="sessionAttemptText">1 von 3</strong>
+              </div>
+              <div class="status-card surface-inset">
+                <span class="status-label">Zeit</span>
+                <strong id="sessionTimer">00:00</strong>
+              </div>
+            </div>
+
+            <div class="meter-block">
+              <div class="meter-head">
+                <span>Aufgabenfortschritt</span>
+                <strong id="sessionProgressText">0 %</strong>
+              </div>
+              <div class="meter-track cool">
+                <div id="sessionProgressBar" class="meter-fill"></div>
+              </div>
+            </div>
+          </aside>
+
+          <section class="surface task-panel">
+            <div class="task-header">
+              <div>
+                <p id="taskEyebrow" class="section-label">Aufgabe</p>
+                <h2 id="taskTitle">-</h2>
+              </div>
+              <span id="attemptBadge" class="badge badge-warning">Versuch 1 von 3</span>
+            </div>
+
+            <p id="taskPrompt" class="task-prompt"></p>
+            <div id="taskContext" class="task-context" hidden></div>
+            <div id="taskWorkspace" class="task-workspace"></div>
+            <section id="feedbackPanel" class="feedback-panel" hidden></section>
+
+            <div class="control-row">
+              <button id="checkButton" class="button button-primary" type="button">Prüfen</button>
+              <button id="resetAnswerButton" class="button button-ghost" type="button">Eingabe leeren</button>
+              <button id="retryTaskButton" class="button button-secondary" type="button">Aufgabe neu laden</button>
+              <button id="nextTaskButton" class="button button-primary" type="button" disabled>Nächste Aufgabe</button>
+            </div>
+          </section>
+        </div>
+      </section>
+
+      <section id="completionView" class="surface completion-panel" hidden>
+        <p class="eyebrow">Modul abgeschlossen</p>
+        <h2 id="completionTitle">Ergebnis</h2>
+        <p id="completionLead" class="hero-lead completion-lead"></p>
+        <div id="completionBadgeRow" class="completion-badge-row"></div>
+
+        <div id="completionMetrics" class="metric-row"></div>
+
+        <div class="completion-actions">
+          <button id="replayModuleButton" class="button button-secondary" type="button">Modul wiederholen</button>
+          <button id="nextModuleButton" class="button button-primary" type="button">Nächstes Modul</button>
+          <button id="completionTeacherButton" class="button button-ghost" type="button">Lehrer*innen-Dashboard</button>
+          <button id="completionDashboardButton" class="button button-ghost" type="button">Zur Übersicht</button>
+        </div>
+      </section>
+
+      <section id="teacherDashboardView" class="surface" hidden>
+        <div class="section-head">
+          <div>
+            <p class="section-label">Lehrer*innen-Ansicht</p>
+            <h2>Fortschritt der Lernenden</h2>
+          </div>
+          <div class="toolbar-row">
+            <button id="closeTeacherButton" class="button button-ghost" type="button">Schließen</button>
+            <button id="resetAllButton" class="button button-ghost" type="button">Alle Daten löschen</button>
+          </div>
+        </div>
+
+        <div id="teacherSummary" class="metric-row"></div>
+        <div id="teacherStudents" class="teacher-students"></div>
+      </section>
+    </main>
+  </div>
+
+  <script defer src="data.js"></script>
+  <script defer src="app.js"></script>
+</body>
+</html>
