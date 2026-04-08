@@ -54,6 +54,120 @@
     );
   }
 
+
+  function cloneValue(value) {
+    return JSON.parse(JSON.stringify(value));
+  }
+
+  function replaceText(value, replacements) {
+    let result = String(value);
+
+    Object.keys(replacements).forEach(function (source) {
+      const target = replacements[source];
+      result = result.split(source).join(target);
+      result = result.split(source.toLowerCase()).join(String(target).toLowerCase());
+    });
+
+    return result;
+  }
+
+  function transformValue(value, replacements) {
+    if (typeof value === "string") {
+      return replaceText(value, replacements);
+    }
+
+    if (Array.isArray(value)) {
+      return value.map(function (entry) {
+        return transformValue(entry, replacements);
+      });
+    }
+
+    if (value && typeof value === "object") {
+      const copy = {};
+
+      Object.keys(value).forEach(function (key) {
+        copy[key] = key === "id" ? value[key] : transformValue(value[key], replacements);
+      });
+
+      return copy;
+    }
+
+    return value;
+  }
+
+  const taskVariants = [
+    {
+      suffix: "",
+      titleSuffix: "",
+      replacements: {}
+    },
+    {
+      suffix: "-v2",
+      titleSuffix: " · Variante 2",
+      replacements: {
+        Sara: "Mina",
+        Leon: "Noah",
+        Omar: "Yusuf",
+        Aylin: "Esra",
+        Bruder: "Cousin",
+        Schwester: "Freundin",
+        Bibliothek: "Mediothek",
+        Klasse: "Lerngruppe",
+        Winter: "Sommer",
+        Park: "Schulhof"
+      }
+    },
+    {
+      suffix: "-v3",
+      titleSuffix: " · Variante 3",
+      replacements: {
+        Sara: "Nora",
+        Leon: "Tariq",
+        Omar: "Bilal",
+        Aylin: "Mara",
+        Bruder: "Nachbar",
+        Schwester: "Mitschuelerin",
+        Bibliothek: "Schulbibliothek",
+        Klasse: "Gruppe",
+        Winter: "Fruehling",
+        Park: "Garten"
+      }
+    },
+    {
+      suffix: "-v4",
+      titleSuffix: " · Variante 4",
+      replacements: {
+        Sara: "Lina",
+        Leon: "Adam",
+        Omar: "Karim",
+        Aylin: "Zehra",
+        Bruder: "Freund",
+        Schwester: "Nachbarin",
+        Bibliothek: "Leseraum",
+        Klasse: "AG",
+        Winter: "Herbst",
+        Park: "Sportplatz"
+      }
+    }
+  ];
+
+  function createTaskVariant(task, variant) {
+    const copy = transformValue(cloneValue(task), variant.replacements);
+    copy.id = task.id + variant.suffix;
+    copy.title = String(copy.title || task.title || "") + variant.titleSuffix;
+    return copy;
+  }
+
+  function expandTasks(tasks) {
+    return taskVariants.reduce(function (all, variant) {
+      return all.concat(
+        tasks.map(function (task) {
+          return createTaskVariant(task, variant);
+        })
+      );
+    }, []);
+  }
+
   const levels = [
     {
       id: "anfaenger",
@@ -846,6 +960,12 @@
       ]
     }
   ];
+
+  levels.forEach(function (level) {
+    level.modules.forEach(function (module) {
+      module.tasks = expandTasks(module.tasks);
+    });
+  });
 
   const moduleSequence = [];
   let totalTasks = 0;

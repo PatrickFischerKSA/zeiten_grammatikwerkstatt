@@ -137,11 +137,11 @@ body::before {
 }
 
 .hero h1 {
-  max-width: 11ch;
-  font-size: clamp(3rem, 6.6vw, 4.85rem);
-  line-height: 0.94;
+  max-width: none;
+  font-size: clamp(2.8rem, 5.6vw, 4.35rem);
+  line-height: 0.95;
   text-wrap: balance;
-  overflow-wrap: anywhere;
+  overflow-wrap: normal;
 }
 
 .hero-lead,
@@ -226,13 +226,6 @@ body::before {
 .hero-list {
   margin: 16px 0 0;
   padding-left: 18px;
-}
-
-.hero-focus {
-  margin: 10px 0 0;
-  color: var(--accent);
-  font-size: 1.02rem;
-  font-weight: 700;
 }
 
 .view-stack {
