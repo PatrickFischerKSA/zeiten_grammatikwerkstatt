@@ -1,8 +1,8 @@
 (function () {
-  const data = window.MalAngabeWorkshopData;
-  const STORAGE_KEY = "malangabe-werkstatt-state-v1";
+  const data = window.SprachwerkstattZeitenData;
+  const STORAGE_KEY = "sprachwerkstatt-zeiten-state-v2";
   const TEACHER_PASSWORD = "zeiten";
-  const TEACHER_SESSION_KEY = "malangabe-werkstatt-teacher-session";
+  const TEACHER_SESSION_KEY = "sprachwerkstatt-zeiten-teacher-session";
 
   const catalog = buildCatalog();
   const elements = cacheElements();

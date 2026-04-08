@@ -47,13 +47,12 @@
     return Object.assign(
       {
         type: "erklaerung",
-        inputLabel: "Erklaerung",
-        placeholder: "Erklaere kurz, warum ..."
+        inputLabel: "Erklärung",
+        placeholder: "Erkläre kurz, warum ..."
       },
       config
     );
   }
-
 
   function cloneValue(value) {
     return JSON.parse(JSON.stringify(value));
@@ -105,48 +104,57 @@
       suffix: "-v2",
       titleSuffix: " · Variante 2",
       replacements: {
-        Sara: "Mina",
-        Leon: "Noah",
-        Omar: "Yusuf",
-        Aylin: "Esra",
-        Bruder: "Cousin",
-        Schwester: "Freundin",
-        Bibliothek: "Mediothek",
+        Aylin: "Mina",
+        Ben: "Noah",
+        Lara: "Esra",
+        Ali: "Yusuf",
+        Nora: "Mara",
+        Mira: "Zehra",
+        Lea: "Sofia",
+        "Frau Keller": "Frau Sommer",
+        Bern: "Zürich",
+        Bahnhof: "Busbahnhof",
+        Schule: "Sprachschule",
         Klasse: "Lerngruppe",
-        Winter: "Sommer",
-        Park: "Schulhof"
+        Gruppe: "Kurs"
       }
     },
     {
       suffix: "-v3",
       titleSuffix: " · Variante 3",
       replacements: {
-        Sara: "Nora",
-        Leon: "Tariq",
-        Omar: "Bilal",
-        Aylin: "Mara",
-        Bruder: "Nachbar",
-        Schwester: "Mitschuelerin",
-        Bibliothek: "Schulbibliothek",
+        Aylin: "Nora",
+        Ben: "Tariq",
+        Lara: "Mara",
+        Ali: "Bilal",
+        Nora: "Lina",
+        Mira: "Selin",
+        Lea: "Amira",
+        "Frau Keller": "Frau Weber",
+        Bern: "Basel",
+        Bahnhof: "Haltestelle",
+        Schule: "Berufsschule",
         Klasse: "Gruppe",
-        Winter: "Fruehling",
-        Park: "Garten"
+        Gruppe: "Seminargruppe"
       }
     },
     {
       suffix: "-v4",
       titleSuffix: " · Variante 4",
       replacements: {
-        Sara: "Lina",
-        Leon: "Adam",
-        Omar: "Karim",
         Aylin: "Zehra",
-        Bruder: "Freund",
-        Schwester: "Nachbarin",
-        Bibliothek: "Leseraum",
+        Ben: "Adam",
+        Lara: "Lina",
+        Ali: "Karim",
+        Nora: "Mina",
+        Mira: "Aylin",
+        Lea: "Nora",
+        "Frau Keller": "Frau Huber",
+        Bern: "Luzern",
+        Bahnhof: "Zugbahnhof",
+        Schule: "Abendschule",
         Klasse: "AG",
-        Winter: "Herbst",
-        Park: "Sportplatz"
+        Gruppe: "Lerngruppe"
       }
     }
   ];
@@ -172,192 +180,190 @@
     {
       id: "anfaenger",
       rank: "01",
-      title: "Anfaenger",
-      subtitle: "Mal-Angaben erkennen und einfach verwenden",
+      title: "Anfänger",
+      subtitle: "Perfekt und Präteritum sicher bilden",
       description:
-        "Hier geht es um die Grundfrage: Welche Ausdruecke sagen, wie oft etwas passiert?",
+        "Hier geht es um die ersten Vergangenheitsformen: Perfekt für den Alltag und Präteritum für wichtige Grundformen und Erzählungen.",
       modules: [
         {
-          id: "grundlagen-erkennen",
-          title: "Grundlagen erkennen",
-          summary: "Einfache Mal-Angaben von Zeitpunkt und Dauer unterscheiden.",
+          id: "perfekt-bilden",
+          title: "Perfekt bilden",
+          summary: "Hilfsverb, Partizip II und Satzklammer im Perfekt richtig verwenden.",
           tasks: [
             freitext({
-              id: "g1-ft",
-              title: "Eine passende Mal-Angabe schreiben",
-              prompt: "Schreibe eine Mal-Angabe, die bedeutet: an allen Tagen.",
-              acceptedAnswers: ["jeden tag", "taeglich", "taglich"],
-              hint: "Gesucht ist eine Antwort auf die Frage: Wie oft?",
-              solution: "jeden Tag",
+              id: "p1-ft",
+              title: "Perfekt aus dem Präsens bilden",
+              prompt: "Bilde das Perfekt: Ich lerne Deutsch.",
+              acceptedAnswers: ["ich habe deutsch gelernt"],
+              hint: "Du brauchst ein Hilfsverb und das Partizip II.",
+              solution: "Ich habe Deutsch gelernt.",
               explanation:
-                "'Jeden Tag' und 'taeglich' sind Mal-Angaben. Sie sagen, dass etwas an jedem Tag passiert."
+                "Das Perfekt wird mit Hilfsverb und Partizip II gebildet. Bei 'lernen' heißt das: 'habe gelernt'."
             }),
             lueckentext({
-              id: "g1-lt",
-              title: "Luecken passend fuellen",
-              prompt: "Ergaenze beide Luecken mit der passenden Mal-Angabe.",
-              context: "1 = haeufig, aber nicht immer. 2 = kein einziges Mal.",
-              segments: ["Ich gehe ", " spazieren. Mein Bruder geht ", " spazieren."],
+              id: "p1-lt",
+              title: "Hilfsverb und Partizip ergänzen",
+              prompt: "Ergänze die Perfektform vollständig.",
+              context: "Achte auf die Satzklammer.",
+              segments: ["Gestern ", " wir lange im Park ", "."],
               blanks: [
                 {
                   id: "b1",
-                  label: "Luecke 1",
-                  answers: ["oft"]
+                  label: "Hilfsverb",
+                  answers: ["haben"]
                 },
                 {
                   id: "b2",
-                  label: "Luecke 2",
-                  answers: ["nie"]
+                  label: "Partizip II",
+                  answers: ["gespielt"]
                 }
               ],
-              hint: "Die erste Angabe ist nicht total. Die zweite bedeutet 0 Mal.",
-              solution: "Ich gehe oft spazieren. Mein Bruder geht nie spazieren.",
+              hint: "Im Perfekt steht das Hilfsverb vorn und das Partizip am Satzende.",
+              solution: "Gestern haben wir lange im Park gespielt.",
               explanation:
-                "'Oft' beschreibt eine hohe Haeufigkeit. 'Nie' bedeutet, dass etwas kein einziges Mal passiert."
+                "Die Perfektform lautet 'haben gespielt'. Das Hilfsverb steht an Position 2, das Partizip II am Ende."
             }),
             dragdrop({
-              id: "g1-dd",
-              title: "Satzteile ordnen",
-              prompt: "Ordne die Satzteile so, dass ein richtiger Satz mit Mal-Angabe entsteht.",
+              id: "p1-dd",
+              title: "Perfektsatz ordnen",
+              prompt: "Ordne die Satzteile zu einem korrekten Perfektsatz.",
               slots: [
                 { id: "start", label: "Anfang" },
-                { id: "mitte", label: "Mitte" },
-                { id: "ende", label: "Ende" }
+                { id: "mitte", label: "Verbteil 1" },
+                { id: "ende", label: "Verbteil 2 + Rest" }
               ],
               options: [
-                { id: "o1", label: "Jeden Mittwoch" },
-                { id: "o2", label: "trifft sich" },
-                { id: "o3", label: "unsere Klasse in der Bibliothek." },
-                { id: "o4", label: "gestern" }
+                { id: "o1", label: "Am Abend" },
+                { id: "o2", label: "hat" },
+                { id: "o3", label: "Aylin ihre Hausaufgaben gemacht." },
+                { id: "o4", label: "morgen" }
               ],
               correctMap: {
                 start: "o1",
                 mitte: "o2",
                 ende: "o3"
               },
-              hint: "Suche zuerst die Mal-Angabe und danach das Verb in Position 2.",
-              solution: "Jeden Mittwoch trifft sich unsere Klasse in der Bibliothek.",
+              hint: "Im Perfekt steht das Hilfsverb vor dem Subjekt, das Partizip ganz am Ende.",
+              solution: "Am Abend hat Aylin ihre Hausaufgaben gemacht.",
               explanation:
-                "'Jeden Mittwoch' ist die Mal-Angabe. Danach steht im Hauptsatz das Verb 'trifft'."
+                "Im Hauptsatz bildet das Perfekt eine Satzklammer: 'hat' steht früh, 'gemacht' steht am Ende."
             }),
             fehlertext({
-              id: "g1-fe",
-              title: "Fehlertext verbessern",
-              prompt: "Der Satz enthaelt keine Mal-Angabe. Schreibe ihn so um, dass die Frage 'Wie oft?' beantwortet wird.",
-              context: "Wir treffen uns gestern im Park.",
-              acceptedAnswers: ["wir treffen uns oft im park.", "wir treffen uns oft im park"],
-              hint: "Ersetze den Zeitpunkt durch eine Haeufigkeitsangabe.",
-              solution: "Wir treffen uns oft im Park.",
+              id: "p1-fe",
+              title: "Falsches Hilfsverb korrigieren",
+              prompt: "Korrigiere den Satz.",
+              context: "Wir sind einen Film gesehen.",
+              acceptedAnswers: ["wir haben einen film gesehen"],
+              hint: "Das Verb 'sehen' bildet das Perfekt mit 'haben'.",
+              solution: "Wir haben einen Film gesehen.",
               explanation:
-                "'Gestern' sagt, wann etwas passiert. Eine Mal-Angabe muss sagen, wie oft etwas passiert, zum Beispiel 'oft'."
+                "Bei den meisten Vollverben verwendet man im Perfekt 'haben'. 'Sehen' ist kein Bewegungsverb mit Ortswechsel."
             }),
             erklaerung({
-              id: "g1-er",
-              title: "Kurz erklaeren",
-              prompt: "Erklaere kurz: Warum ist 'um 8 Uhr' keine Mal-Angabe?",
-              keywordGroups: [["zeitpunkt"], ["wie oft", "haeufig"]],
+              id: "p1-er",
+              title: "Hilfsverb erklären",
+              prompt: "Erkläre kurz: Warum heißt es 'Ich bin nach Hause gegangen' und nicht 'Ich habe nach Hause gegangen'?",
+              keywordGroups: [["sein", "bin"], ["bewegung", "ortswechsel", "richtung"]],
               acceptedAnswers: [
-                "um 8 uhr ist ein zeitpunkt und keine antwort auf wie oft.",
-                "um 8 uhr nennt einen zeitpunkt und keine haeufigkeit."
+                "weil gehen eine bewegung mit ortswechsel ist und deshalb das perfekt mit sein gebildet wird",
+                "weil man bei gehen im perfekt sein benutzt, da es um eine bewegung von einem ort zum anderen geht"
               ],
-              hint: "Vergleiche die Fragen 'Wann?' und 'Wie oft?'.",
-              solution: "Um 8 Uhr ist ein Zeitpunkt. Es beantwortet die Frage 'Wann?' und nicht 'Wie oft?'.",
+              hint: "Denke an Verben der Bewegung mit Ortswechsel.",
+              solution:
+                "Bei 'gehen' verwendet man im Perfekt 'sein', weil das Verb eine Bewegung mit Ortswechsel ausdrückt.",
               explanation:
-                "Eine Mal-Angabe beschreibt Wiederholung oder Haeufigkeit. 'Um 8 Uhr' nennt nur einen Zeitpunkt."
+                "Viele Bewegungsverben mit Richtungs- oder Ortswechsel bilden das Perfekt mit 'sein'."
             })
           ]
         },
         {
-          id: "alltagssaetze",
-          title: "Alltagssaetze",
-          summary: "Einfache Saetze mit typischen Mal-Angaben aus dem Alltag bilden.",
+          id: "praeteritum-bilden",
+          title: "Präteritum bilden",
+          summary: "Typische Präteritumformen von sein, haben und wichtigen Verben anwenden.",
           tasks: [
             freitext({
-              id: "g2-ft",
-              title: "Bedeutung in ein Wort umsetzen",
-              prompt: "Schreibe die passende Mal-Angabe: nicht ein einziges Mal.",
-              acceptedAnswers: ["nie"],
-              hint: "Die gesuchte Angabe bedeutet 0 Mal.",
-              solution: "nie",
+              id: "p2-ft",
+              title: "Präteritum von haben bilden",
+              prompt: "Bilde das Präteritum: Ich habe keine Zeit.",
+              acceptedAnswers: ["ich hatte keine zeit"],
+              hint: "Die Präteritumform von 'haben' ist unregelmäßig.",
+              solution: "Ich hatte keine Zeit.",
               explanation:
-                "'Nie' ist eine Mal-Angabe und bedeutet: etwas passiert kein einziges Mal."
+                "Im Präteritum heißt 'haben' nicht 'habte', sondern 'hatte'."
             }),
             lueckentext({
-              id: "g2-lt",
-              title: "Alltag ergaenzen",
-              prompt: "Fuellen die Luecken passend aus.",
-              context: "1 = jede Woche am gleichen Tag. 2 = nicht oft.",
-              segments: ["Sara besucht ihre Oma ", ". Im Winter geht sie ", " schwimmen."],
+              id: "p2-lt",
+              title: "Zwei Präteritumformen ergänzen",
+              prompt: "Ergänze die Verben im Präteritum.",
+              context: "Beide Formen stehen in einer Erzählung.",
+              segments: ["Früher ", " mein Lehrer streng, aber er ", " immer fair."],
               blanks: [
                 {
                   id: "b1",
-                  label: "Luecke 1",
-                  answers: ["jeden sonntag"]
+                  label: "Verb 1",
+                  answers: ["war"]
                 },
                 {
                   id: "b2",
-                  label: "Luecke 2",
-                  answers: ["selten"]
+                  label: "Verb 2",
+                  answers: ["blieb"]
                 }
               ],
-              hint: "Eine Angabe ist genau, die andere eher ungenau.",
-              solution: "Sara besucht ihre Oma jeden Sonntag. Im Winter geht sie selten schwimmen.",
+              hint: "Die Formen gehören zu 'sein' und 'bleiben'.",
+              solution: "Früher war mein Lehrer streng, aber er blieb immer fair.",
               explanation:
-                "'Jeden Sonntag' ist eine genaue Mal-Angabe. 'Selten' ist ungenau, aber trotzdem eine Mal-Angabe."
+                "Im Präteritum heißt es 'war' und 'blieb'. Solche Formen muss man oft auswendig lernen."
             }),
             dragdrop({
-              id: "g2-dd",
-              title: "Satz mit genauer Angabe bauen",
-              prompt: "Ordne die Teile zu einem korrekten Satz.",
+              id: "p2-dd",
+              title: "Erzählsatz ordnen",
+              prompt: "Ordne die Satzteile zu einem korrekten Satz im Präteritum.",
               slots: [
                 { id: "start", label: "Anfang" },
-                { id: "mitte", label: "Mitte" },
-                { id: "ende", label: "Ende" }
+                { id: "mitte", label: "Verb" },
+                { id: "ende", label: "Rest" }
               ],
               options: [
-                { id: "o1", label: "Dreimal im Monat" },
-                { id: "o2", label: "putzt" },
-                { id: "o3", label: "Leon sein Fahrrad." },
-                { id: "o4", label: "zwei Stunden" }
+                { id: "o1", label: "Letzte Woche" },
+                { id: "o2", label: "kam" },
+                { id: "o3", label: "der Bus zu spät." },
+                { id: "o4", label: "kommen" }
               ],
               correctMap: {
                 start: "o1",
                 mitte: "o2",
                 ende: "o3"
               },
-              hint: "Die Mal-Angabe kommt hier an den Satzanfang.",
-              solution: "Dreimal im Monat putzt Leon sein Fahrrad.",
+              hint: "Die Vergangenheitsform von 'kommen' lautet hier 'kam'.",
+              solution: "Letzte Woche kam der Bus zu spät.",
               explanation:
-                "'Dreimal im Monat' beantwortet die Frage 'Wie oft?'. Danach folgt die Verbform 'putzt'."
+                "Im Präteritum vieler starker Verben verändert sich der Stamm. Deshalb heißt es 'kam'."
             }),
             fehlertext({
-              id: "g2-fe",
-              title: "Dauer oder Haeufigkeit?",
-              prompt: "Schreibe den Satz so um, dass eine Mal-Angabe entsteht.",
-              context: "Ich lerne zwei Stunden Deutsch.",
-              acceptedAnswers: [
-                "ich lerne zweimal pro woche deutsch.",
-                "ich lerne zweimal pro woche deutsch"
-              ],
-              hint: "Zwei Stunden ist eine Dauer. Gesucht ist eine Haeufigkeitsangabe.",
-              solution: "Ich lerne zweimal pro Woche Deutsch.",
+              id: "p2-fe",
+              title: "Unregelmäßige Form verbessern",
+              prompt: "Korrigiere den Satz im Präteritum.",
+              context: "Gestern gehte ich früh ins Bett.",
+              acceptedAnswers: ["gestern ging ich früh ins bett", "gestern ging ich frueh ins bett"],
+              hint: "Das Verb 'gehen' bildet das Präteritum unregelmäßig.",
+              solution: "Gestern ging ich früh ins Bett.",
               explanation:
-                "'Zwei Stunden' beantwortet die Frage 'Wie lange?'. 'Zweimal pro Woche' beantwortet die Frage 'Wie oft?'."
+                "Die richtige Präteritumform von 'gehen' lautet 'ging'."
             }),
             erklaerung({
-              id: "g2-er",
-              title: "Genau unterscheiden",
-              prompt: "Erklaere kurz den Unterschied zwischen 'jeden Mittwoch' und 'am Mittwoch'.",
-              keywordGroups: [["jede woche", "wiederholt"], ["einmal", "ein tag", "ein zeitpunkt"]],
+              id: "p2-er",
+              title: "Verwendung erklären",
+              prompt: "Erkläre kurz: Warum liest man das Präteritum oft in Geschichten und Berichten?",
+              keywordGroups: [["geschichte", "erzählung", "bericht", "schrift"], ["vergangenheit"]],
               acceptedAnswers: [
-                "jeden mittwoch bedeutet jede woche. am mittwoch kann nur einen tag meinen.",
-                "jeden mittwoch ist wiederholt. am mittwoch kann nur ein zeitpunkt sein."
+                "weil das praeteritum in schriftlichen erzaehlungen oft fuer vergangene handlungen verwendet wird",
+                "weil man in geschichten und berichten vergangene ereignisse oft im praeteritum erzaehlt"
               ],
-              hint: "Eine Form sagt Wiederholung, die andere oft nur einen einzelnen Tag.",
+              hint: "Es geht um schriftliche Erzählungen über Vergangenes.",
               solution:
-                "'Jeden Mittwoch' bedeutet: jede Woche wieder. 'Am Mittwoch' kann auch nur einen einzelnen Mittwoch meinen.",
+                "Das Präteritum wird in Geschichten, Berichten und anderen schriftlichen Erzählungen oft für vergangene Handlungen verwendet.",
               explanation:
-                "Mal-Angaben beschreiben Wiederholung. Deshalb ist 'jeden Mittwoch' als Mal-Angabe klarer als 'am Mittwoch'."
+                "Im Alltag hört man häufig das Perfekt. In schriftlichen Erzähltexten ist dagegen das Präteritum typisch."
             })
           ]
         }
@@ -367,200 +373,201 @@
       id: "leicht-fortgeschritten",
       rank: "02",
       title: "Leicht fortgeschritten",
-      subtitle: "Genau, ungenau und richtig im Satz platziert",
+      subtitle: "Plusquamperfekt und Modalverben in der Vergangenheit",
       description:
-        "In diesem Bereich werden Mal-Angaben genauer formuliert und mit sicherer Satzstellung verwendet.",
+        "Hier wird deutlich, was vor einer anderen Vergangenheit geschah und wie Modalverben in Perfekt und Präteritum funktionieren.",
       modules: [
         {
-          id: "genaue-angaben",
-          title: "Genaue und ungenaue Angaben",
-          summary: "Zwischen sehr genauen und eher offenen Mal-Angaben unterscheiden.",
+          id: "plusquamperfekt",
+          title: "Plusquamperfekt",
+          summary: "Vorvergangenheit bilden und richtig mit einer zweiten Vergangenheit verbinden.",
           tasks: [
             freitext({
-              id: "g3-ft",
-              title: "Eine genaue Angabe formulieren",
-              prompt: "Schreibe eine genaue Mal-Angabe fuer: Der Kurs findet 2-mal pro Woche statt.",
-              acceptedAnswers: ["zweimal pro woche"],
-              hint: "Gesucht ist eine Form mit Zahl.",
-              solution: "zweimal pro Woche",
+              id: "p3-ft",
+              title: "Vorvergangenheit bilden",
+              prompt: "Bilde das Plusquamperfekt von dem ersten Satz: Lara schließt die Tür ab. Dann ging sie los.",
+              acceptedAnswers: [
+                "lara hatte die tür abgeschlossen",
+                "lara hatte die tuer abgeschlossen"
+              ],
+              hint: "Du brauchst 'hatte' oder 'war' und ein Partizip II.",
+              solution: "Lara hatte die Tür abgeschlossen.",
               explanation:
-                "'Zweimal pro Woche' ist eine genaue Mal-Angabe, weil die Haeufigkeit exakt genannt wird."
+                "Das Plusquamperfekt zeigt, dass das Abschließen vor dem Losgehen passiert ist."
             }),
             lueckentext({
-              id: "g3-lt",
-              title: "Genau oder eher offen",
-              prompt: "Ergaenze die zwei Mal-Angaben.",
-              context: "1 = meistens. 2 = nicht oft.",
-              segments: ["Ich esse ", " in der Mensa, aber ich koche ", " zu Hause."],
+              id: "p3-lt",
+              title: "Plusquamperfekt ergänzen",
+              prompt: "Ergänze die Vorvergangenheit.",
+              context: "Die Handlung vor dem Unterricht steht im Plusquamperfekt.",
+              segments: ["Bevor der Unterricht begann, ", " wir alles ", "."],
               blanks: [
                 {
                   id: "b1",
-                  label: "Luecke 1",
-                  answers: ["meistens"]
+                  label: "Hilfsverb",
+                  answers: ["hatten"]
                 },
                 {
                   id: "b2",
-                  label: "Luecke 2",
-                  answers: ["selten"]
+                  label: "Partizip II",
+                  answers: ["vorbereitet"]
                 }
               ],
-              hint: "Eine Loesung ist etwas staerker als 'oft'.",
-              solution: "Ich esse meistens in der Mensa, aber ich koche selten zu Hause.",
+              hint: "Das Hilfsverb steht hier im Präteritum: 'hatten'.",
+              solution: "Bevor der Unterricht begann, hatten wir alles vorbereitet.",
               explanation:
-                "'Meistens' bedeutet: in den meisten Faellen. 'Selten' bedeutet: nicht oft."
+                "Plusquamperfekt = Präteritum von 'haben/sein' + Partizip II."
             }),
             dragdrop({
-              id: "g3-dd",
-              title: "Haeufigkeit richtig einbauen",
-              prompt: "Baue aus den Teilen einen korrekten Satz.",
+              id: "p3-dd",
+              title: "Vorher und nachher ordnen",
+              prompt: "Ordne die Satzteile zu einem korrekten Satz mit Plusquamperfekt.",
               slots: [
-                { id: "start", label: "Anfang" },
-                { id: "mitte", label: "Mitte" },
-                { id: "ende", label: "Ende" }
+                { id: "start", label: "Nebensatzanfang" },
+                { id: "mitte", label: "Nebensatzrest" },
+                { id: "ende", label: "Hauptsatz" }
               ],
               options: [
-                { id: "o1", label: "Amir kommt" },
-                { id: "o2", label: "fast nie" },
-                { id: "o3", label: "zu spaet." },
-                { id: "o4", label: "um 7 Uhr" }
+                { id: "o1", label: "Nachdem Ali gefrühstückt hatte," },
+                { id: "o2", label: "ging er" },
+                { id: "o3", label: "zur Schule." },
+                { id: "o4", label: "frühstückt" }
               ],
               correctMap: {
                 start: "o1",
                 mitte: "o2",
                 ende: "o3"
               },
-              hint: "Die Mal-Angabe beschreibt hier das Verb 'kommt'.",
-              solution: "Amir kommt fast nie zu spaet.",
+              hint: "Die frühere Handlung steht im Nebensatz mit 'hatte'.",
+              solution: "Nachdem Ali gefrühstückt hatte, ging er zur Schule.",
               explanation:
-                "'Fast nie' ist eine sehr starke Mal-Angabe. Sie sagt: nur in ganz wenigen Faellen."
+                "Das Frühstück passierte zuerst. Deshalb steht es im Plusquamperfekt, die spätere Handlung im Präteritum."
             }),
             fehlertext({
-              id: "g3-fe",
-              title: "Den Zeitpunkt austauschen",
-              prompt: "Schreibe den Satz so um, dass eine passende Mal-Angabe entsteht.",
-              context: "Meine Schwester liest um 20 Uhr Buecher.",
+              id: "p3-fe",
+              title: "Zeitfolge korrigieren",
+              prompt: "Korrigiere den Satz.",
+              context: "Nachdem wir gegessen haben, gingen wir spazieren.",
               acceptedAnswers: [
-                "meine schwester liest jeden abend buecher.",
-                "meine schwester liest oft buecher."
+                "nachdem wir gegessen hatten gingen wir spazieren",
+                "nachdem wir gegessen hatten, gingen wir spazieren"
               ],
-              hint: "Ersetze 'Wann?' durch 'Wie oft?'.",
-              solution: "Meine Schwester liest jeden Abend Buecher.",
+              hint: "Die frühere Handlung braucht hier das Plusquamperfekt.",
+              solution: "Nachdem wir gegessen hatten, gingen wir spazieren.",
               explanation:
-                "'Um 20 Uhr' gibt nur einen Zeitpunkt an. 'Jeden Abend' ist eine Mal-Angabe, weil es Wiederholung zeigt."
+                "Das Essen geschah vor dem Spaziergang. Darum braucht der Nebensatz das Plusquamperfekt."
             }),
             erklaerung({
-              id: "g3-er",
-              title: "Fragen vergleichen",
-              prompt: "Erklaere kurz: Warum passt 'manchmal' besser auf die Frage 'Wie oft?' als 'um 20 Uhr'?",
-              keywordGroups: [["manchmal", "haeufigkeit"], ["um 20 uhr", "zeitpunkt"]],
+              id: "p3-er",
+              title: "Funktion erklären",
+              prompt: "Erkläre kurz: Wozu benutzt man das Plusquamperfekt?",
+              keywordGroups: [["vor", "früher", "zuerst", "vorher"], ["vergangenheit"]],
               acceptedAnswers: [
-                "manchmal beschreibt haeufigkeit. um 20 uhr ist nur ein zeitpunkt.",
-                "manchmal beantwortet wie oft. um 20 uhr beantwortet wann."
+                "man benutzt das plusquamperfekt fuer eine vergangene handlung, die vor einer anderen vergangenheit passiert ist",
+                "das plusquamperfekt zeigt, dass etwas schon vorher in der vergangenheit geschehen war"
               ],
-              hint: "Vergleiche die beiden Fragen genau.",
+              hint: "Es geht um eine Handlung vor einer anderen Handlung in der Vergangenheit.",
               solution:
-                "'Manchmal' beantwortet die Frage 'Wie oft?'. 'Um 20 Uhr' beantwortet die Frage 'Wann?'.",
+                "Das Plusquamperfekt benutzt man für eine vergangene Handlung, die vor einer anderen vergangenen Handlung passiert ist.",
               explanation:
-                "Eine Mal-Angabe beschreibt, wie oft etwas geschieht. Ein Zeitpunkt nennt nur die Uhrzeit oder den Tag."
+                "Darum nennt man es auch Vorvergangenheit."
             })
           ]
         },
         {
-          id: "satzstellung",
-          title: "Satzstellung und Varianten",
-          summary: "Mal-Angaben am Anfang oder im Mittelfeld sicher verwenden.",
+          id: "modalverben-vergangenheit",
+          title: "Modalverben in der Vergangenheit",
+          summary: "Modalverben in Präteritum und Perfekt mit Doppelinfinitiv richtig verwenden.",
           tasks: [
             freitext({
-              id: "g4-ft",
-              title: "Satz mit Vorgabe schreiben",
-              prompt: "Schreibe den Satz richtig auf: zweimal pro Woche / ich / joggen",
+              id: "p4-ft",
+              title: "Perfekt mit Modalverb bilden",
+              prompt: "Bilde das Perfekt: Ich muss früh aufstehen.",
               acceptedAnswers: [
-                "ich jogge zweimal pro woche.",
-                "ich jogge zweimal pro woche",
-                "zweimal pro woche jogge ich.",
-                "zweimal pro woche jogge ich"
+                "ich habe früh aufstehen müssen",
+                "ich habe frueh aufstehen muessen"
               ],
-              hint: "Im Hauptsatz steht das Verb in Position 2.",
-              solution: "Ich jogge zweimal pro Woche.",
+              hint: "Bei Modalverben stehen am Ende zwei Infinitive.",
+              solution: "Ich habe früh aufstehen müssen.",
               explanation:
-                "Die Mal-Angabe kann im Satz stehen oder ins Vorfeld rutschen. Das Verb bleibt trotzdem auf Position 2."
+                "Im Perfekt mit Modalverb steht oft der Doppelinfinitiv: 'habe aufstehen müssen'."
             }),
             lueckentext({
-              id: "g4-lt",
-              title: "Vorfeld und Mittelfeld",
-              prompt: "Ergaenze die Luecken.",
-              context: "1 = genaue Mal-Angabe am Satzanfang. 2 = haeufig, aber nicht immer.",
-              segments: ["", " gehe ich ins Training, und am Sonntag schlafe ich ", " aus."],
+              id: "p4-lt",
+              title: "Modalverben im Präteritum",
+              prompt: "Ergänze die beiden Modalverben im Präteritum.",
+              context: "Es geht um Regeln und Möglichkeiten in der Kindheit.",
+              segments: ["Als Kind ", " ich nie lange fernsehen, aber am Wochenende ", " ich ausschlafen."],
               blanks: [
                 {
                   id: "b1",
-                  label: "Luecke 1",
-                  answers: ["jeden freitag"]
+                  label: "Modalverb 1",
+                  answers: ["durfte"]
                 },
                 {
                   id: "b2",
-                  label: "Luecke 2",
-                  answers: ["oft"]
+                  label: "Modalverb 2",
+                  answers: ["konnte"]
                 }
               ],
-              hint: "Wenn die Mal-Angabe vorne steht, kommt das Verb direkt danach.",
-              solution: "Jeden Freitag gehe ich ins Training, und am Sonntag schlafe ich oft aus.",
+              hint: "Die Formen gehören zu 'dürfen' und 'können'.",
+              solution: "Als Kind durfte ich nie lange fernsehen, aber am Wochenende konnte ich ausschlafen.",
               explanation:
-                "Die erste Mal-Angabe steht im Vorfeld. Deshalb folgt direkt das Verb 'gehe'."
+                "Im Präteritum lauten die Formen 'durfte' und 'konnte'."
             }),
             dragdrop({
-              id: "g4-dd",
-              title: "Satzstellung ordnen",
-              prompt: "Ordne die Teile zu einem korrekten Satz.",
+              id: "p4-dd",
+              title: "Perfekt mit Doppelinfinitiv ordnen",
+              prompt: "Ordne die Satzteile zu einem korrekten Satz.",
               slots: [
                 { id: "start", label: "Anfang" },
-                { id: "mitte", label: "Mitte" },
-                { id: "ende", label: "Ende" }
+                { id: "mitte", label: "Verbteil 1" },
+                { id: "ende", label: "Verbteil 2 + Rest" }
               ],
               options: [
-                { id: "o1", label: "Selten" },
-                { id: "o2", label: "vergisst" },
-                { id: "o3", label: "Mia ihr Heft." },
-                { id: "o4", label: "jeden Morgen" }
+                { id: "o1", label: "Sie" },
+                { id: "o2", label: "hat" },
+                { id: "o3", label: "heute nicht kommen können." },
+                { id: "o4", label: "gekonnt" }
               ],
               correctMap: {
                 start: "o1",
                 mitte: "o2",
                 ende: "o3"
               },
-              hint: "Steht die Mal-Angabe vorn, folgt das Verb sofort.",
-              solution: "Selten vergisst Mia ihr Heft.",
+              hint: "Im Perfekt mit Modalverb steht meistens kein Partizip wie 'gekonnt'.",
+              solution: "Sie hat heute nicht kommen können.",
               explanation:
-                "'Selten' kann am Satzanfang stehen. Dann bleibt das Verb trotzdem an zweiter Stelle."
+                "Bei der Ersatzinfinitiv-Konstruktion stehen am Satzende zwei Infinitive: 'kommen können'."
             }),
             fehlertext({
-              id: "g4-fe",
-              title: "Satzstellung reparieren",
-              prompt: "Der Satz ist falsch gebaut. Schreibe ihn richtig auf.",
-              context: "Nie ich gehe freitags ins Kino.",
+              id: "p4-fe",
+              title: "Doppelinfinitiv verbessern",
+              prompt: "Korrigiere den Satz.",
+              context: "Wir haben ins Kino gehen gekonnt.",
               acceptedAnswers: [
-                "ich gehe freitags nie ins kino.",
-                "ich gehe nie freitags ins kino."
+                "wir haben ins kino gehen können",
+                "wir haben ins kino gehen koennen"
               ],
-              hint: "Das Verb darf im Hauptsatz nicht auf Position 3 stehen.",
-              solution: "Ich gehe freitags nie ins Kino.",
+              hint: "Im Perfekt mit Modalverb bleibt die Form meistens Infinitiv.",
+              solution: "Wir haben ins Kino gehen können.",
               explanation:
-                "Im Hauptsatz steht das Verb auf Position 2. Deshalb ist 'Nie ich gehe ...' falsch."
+                "Mit Modalverb verwendet man hier den Ersatzinfinitiv 'können' statt des Partizips 'gekonnt'."
             }),
             erklaerung({
-              id: "g4-er",
-              title: "Verbposition erklaeren",
-              prompt: "Erklaere kurz: Warum ist 'Oft gehe ich zu Fuss' richtig?",
-              keywordGroups: [["verb", "position 2", "zweite position"], ["oft", "vorne", "vorfeld"]],
+              id: "p4-er",
+              title: "Besonderheit erklären",
+              prompt: "Erkläre kurz: Warum stehen in 'Ich habe kommen müssen' am Ende zwei Infinitive?",
+              keywordGroups: [["modalverb", "müssen", "können", "wollen"], ["zwei", "infinitive", "doppelinfinitiv"]],
               acceptedAnswers: [
-                "oft steht vorne im vorfeld und das verb bleibt auf position 2.",
-                "oft kann vorne stehen. dann steht gehe trotzdem an zweiter position."
+                "weil im perfekt mit modalverb oft ein doppelinfinitiv steht",
+                "weil modalverben im perfekt haeufig mit zwei infinitiven am satzende erscheinen"
               ],
-              hint: "Denke an das Vorfeld im Hauptsatz.",
+              hint: "Es geht um die besondere Perfektbildung mit Modalverben.",
               solution:
-                "'Oft' steht im Vorfeld. Im Hauptsatz bleibt das Verb trotzdem auf Position 2: 'gehe'.",
+                "Bei Modalverben steht im Perfekt oft ein Doppelinfinitiv. Deshalb enden solche Sätze auf zwei Infinitive.",
               explanation:
-                "Mal-Angaben koennen am Satzanfang stehen. Die Grundregel des Hauptsatzes bleibt aber gleich."
+                "Diese Form nennt man auch Ersatzinfinitiv."
             })
           ]
         }
@@ -570,198 +577,200 @@
       id: "fortgeschritten",
       rank: "03",
       title: "Fortgeschritten",
-      subtitle: "Mal-Angaben vergleichen, abstufen und im Zusammenhang korrigieren",
+      subtitle: "Futur I und Futur II anwenden",
       description:
-        "Jetzt werden Haeufigkeiten verglichen, abgestuft und in laengeren Zusammenhaengen sicher benutzt.",
+        "In diesem Bereich geht es um Zukunft, Vermutungen und um Handlungen, die bis zu einem zukünftigen Zeitpunkt abgeschlossen sein werden.",
       modules: [
         {
-          id: "vergleichen",
-          title: "Vergleichen und abstufen",
-          summary: "Frueher und heute mit passenden Mal-Angaben gegenueberstellen.",
+          id: "futur-eins",
+          title: "Futur I",
+          summary: "Zukunft mit 'werden' und Infinitiv sicher bilden.",
           tasks: [
             freitext({
-              id: "g5-ft",
-              title: "Vergleichssatz schreiben",
-              prompt:
-                "Schreibe den Satz richtig auf: frueher / ich / selten / Deutsch sprechen / heute / jeden Tag",
+              id: "p5-ft",
+              title: "Zukunft ausdrücken",
+              prompt: "Bilde das Futur I: Morgen lerne ich für die Prüfung.",
               acceptedAnswers: [
-                "frueher habe ich selten deutsch gesprochen, heute spreche ich jeden tag deutsch.",
-                "frueher sprach ich selten deutsch, heute spreche ich jeden tag deutsch."
+                "morgen werde ich für die prüfung lernen",
+                "morgen werde ich fuer die pruefung lernen"
               ],
-              hint: "In deinem Satz sollen zwei verschiedene Mal-Angaben vorkommen.",
-              solution: "Frueher habe ich selten Deutsch gesprochen, heute spreche ich jeden Tag Deutsch.",
+              hint: "Futur I = werden + Infinitiv.",
+              solution: "Morgen werde ich für die Prüfung lernen.",
               explanation:
-                "Der Satz vergleicht zwei Zeiten. 'Selten' und 'jeden Tag' zeigen die unterschiedliche Haeufigkeit."
+                "Im Futur I kombiniert man 'werden' mit dem Infinitiv des Vollverbs."
             }),
             lueckentext({
-              id: "g5-lt",
-              title: "Frueher und heute",
-              prompt: "Ergaenze beide Luecken passend.",
-              context: "1 = nicht oft. 2 = an jedem Morgen.",
-              segments: ["Frueher bin ich ", " schwimmen gegangen, heute gehe ich ", " laufen."],
+              id: "p5-lt",
+              title: "Futur I ergänzen",
+              prompt: "Ergänze den Satz im Futur I.",
+              context: "Achte auf 'werden' und den Infinitiv.",
+              segments: ["Nächste Woche ", " wir das Kapitel zu Ende ", "."],
               blanks: [
                 {
                   id: "b1",
-                  label: "Luecke 1",
-                  answers: ["selten"]
+                  label: "Form von werden",
+                  answers: ["werden"]
                 },
                 {
                   id: "b2",
-                  label: "Luecke 2",
-                  answers: ["jeden morgen"]
+                  label: "Infinitiv",
+                  answers: ["lesen"]
                 }
               ],
-              hint: "Eine Angabe ist ungenau, die andere genau wiederholt.",
-              solution: "Frueher bin ich selten schwimmen gegangen, heute gehe ich jeden Morgen laufen.",
+              hint: "Bei 'wir' heißt die Form von 'werden' ebenfalls 'werden'.",
+              solution: "Nächste Woche werden wir das Kapitel zu Ende lesen.",
               explanation:
-                "'Selten' und 'jeden Morgen' sind beide Mal-Angaben, aber mit unterschiedlicher Genauigkeit."
+                "Das Futur I besteht aus 'werden' und Infinitiv. Der Infinitiv steht am Satzende."
             }),
             dragdrop({
-              id: "g5-dd",
-              title: "Kontrast bauen",
-              prompt: "Ordne die Teile zu einem korrekten Satz.",
+              id: "p5-dd",
+              title: "Zukunftssatz ordnen",
+              prompt: "Ordne die Satzteile zu einem korrekten Futur-I-Satz.",
               slots: [
                 { id: "start", label: "Anfang" },
-                { id: "mitte", label: "Mitte" },
-                { id: "ende", label: "Ende" }
+                { id: "mitte", label: "Verb" },
+                { id: "ende", label: "Rest" }
               ],
               options: [
-                { id: "o1", label: "Im Urlaub lese ich" },
-                { id: "o2", label: "fast nie" },
-                { id: "o3", label: "lange Nachrichten." },
-                { id: "o4", label: "jeden Mittwoch" }
+                { id: "o1", label: "In zwei Jahren" },
+                { id: "o2", label: "wird" },
+                { id: "o3", label: "Nora in Bern studieren." },
+                { id: "o4", label: "studierte" }
               ],
               correctMap: {
                 start: "o1",
                 mitte: "o2",
                 ende: "o3"
               },
-              hint: "Die Mal-Angabe beschreibt hier das Lesen.",
-              solution: "Im Urlaub lese ich fast nie lange Nachrichten.",
+              hint: "Der Infinitiv 'studieren' steht am Ende.",
+              solution: "In zwei Jahren wird Nora in Bern studieren.",
               explanation:
-                "'Fast nie' ist eine abgestufte Mal-Angabe. Sie ist staerker als 'selten'."
+                "Futur I verwendet 'wird' als finites Verb und den Infinitiv am Satzende."
             }),
             fehlertext({
-              id: "g5-fe",
-              title: "Zeit und Haeufigkeit trennen",
-              prompt: "Schreibe den Satz korrekt auf.",
-              context: "Frueher treffe ich selten Freunde, heute jeden Tag.",
-              acceptedAnswers: [
-                "frueher traf ich selten freunde, heute treffe ich jeden tag freunde.",
-                "frueher habe ich selten freunde getroffen, heute treffe ich jeden tag freunde."
-              ],
-              hint: "Der erste Teil braucht eine passende Vergangenheitsform und der zweite ein Verb.",
-              solution: "Frueher traf ich selten Freunde, heute treffe ich jeden Tag Freunde.",
+              id: "p5-fe",
+              title: "Futur I verbessern",
+              prompt: "Korrigiere den Satz.",
+              context: "Ich werde morgen gegangen.",
+              acceptedAnswers: ["ich werde morgen gehen"],
+              hint: "Nach 'werde' steht im Futur I der Infinitiv.",
+              solution: "Ich werde morgen gehen.",
               explanation:
-                "Mal-Angaben allein machen noch keinen ganzen Satz. Beide Satzteile brauchen eine vollstaendige Verbform."
+                "Das Partizip 'gegangen' gehört nicht ins Futur I. Dort steht der Infinitiv 'gehen'."
             }),
             erklaerung({
-              id: "g5-er",
-              title: "Staerke erklaeren",
-              prompt: "Erklaere kurz den Unterschied zwischen 'meistens' und 'immer'.",
-              keywordGroups: [["meistens", "nicht immer", "nicht jedes mal"], ["immer", "100", "jedes mal"]],
+              id: "p5-er",
+              title: "Bedeutung erklären",
+              prompt: "Erkläre kurz: Was drückt das Futur I meistens aus?",
+              keywordGroups: [["zukunft", "später", "morgen"], ["werden"]],
               acceptedAnswers: [
-                "meistens bedeutet oft, aber nicht immer. immer bedeutet jedes mal.",
-                "meistens ist nicht 100 prozent. immer ist 100 prozent."
+                "das futur i drueckt meistens zukunft aus und wird mit werden plus infinitiv gebildet",
+                "mit dem futur i spricht man meist ueber etwas, das spaeter passieren wird"
               ],
-              hint: "Eine Angabe ist total, die andere fast total.",
+              hint: "Denke an spätere Ereignisse.",
               solution:
-                "'Meistens' bedeutet: in den meisten Faellen, aber nicht immer. 'Immer' bedeutet: jedes Mal.",
+                "Das Futur I drückt meistens Zukunft aus. Es wird mit 'werden' und dem Infinitiv gebildet.",
               explanation:
-                "Beide Woerter sind Mal-Angaben, aber sie unterscheiden sich in der Staerke der Aussage."
+                "Oft kann das Futur I auch eine Absicht oder Vermutung ausdrücken, aber seine Grundfunktion ist die Zukunft."
             })
           ]
         },
         {
-          id: "zusammenhang",
-          title: "Korrigieren im Zusammenhang",
-          summary: "Mal-Angaben in kleinen Texten erkennen, einsetzen und begruenden.",
+          id: "futur-zwei",
+          title: "Futur II",
+          summary: "Abgeschlossene Zukunft und Vermutungen mit Futur II formulieren.",
           tasks: [
             freitext({
-              id: "g6-ft",
-              title: "Genaue Formulierung finden",
-              prompt: "Schreibe die Mal-Angabe auf: an jedem zweiten Tag.",
-              acceptedAnswers: ["jeden zweiten tag"],
-              hint: "Gesucht ist eine wiederholte Angabe mit Abstand.",
-              solution: "jeden zweiten Tag",
+              id: "p6-ft",
+              title: "Abgeschlossene Zukunft bilden",
+              prompt: "Bilde das Futur II: Bis 18 Uhr schreibt Lara den Bericht.",
+              acceptedAnswers: ["bis 18 uhr wird lara den bericht geschrieben haben"],
+              hint: "Futur II = werden + Partizip II + haben/sein.",
+              solution: "Bis 18 Uhr wird Lara den Bericht geschrieben haben.",
               explanation:
-                "'Jeden zweiten Tag' ist eine Mal-Angabe. Sie beschreibt eine regelmaessige Wiederholung."
+                "Das Futur II zeigt, dass eine Handlung bis zu einem zukünftigen Zeitpunkt abgeschlossen sein wird."
             }),
             lueckentext({
-              id: "g6-lt",
-              title: "Mini-Text ergaenzen",
-              prompt: "Ergaenze die drei Luecken sinnvoll.",
-              context: "1 = an jedem Montag. 2 = oft. 3 = fast nie.",
-              segments: [
-                "",
-                " trifft sich unsere Lerngruppe. Wir sprechen ",
-                " Deutsch, aber wir benutzen ",
-                " Handys."
-              ],
+              id: "p6-lt",
+              title: "Futur II ergänzen",
+              prompt: "Ergänze den Satz im Futur II.",
+              context: "Achte auf die dreiteilige Verbform.",
+              segments: ["In einer Stunde ", " der Zug den Bahnhof ", " ", "."],
               blanks: [
-                { id: "b1", label: "Luecke 1", answers: ["jeden montag"] },
-                { id: "b2", label: "Luecke 2", answers: ["oft"] },
-                { id: "b3", label: "Luecke 3", answers: ["fast nie"] }
+                {
+                  id: "b1",
+                  label: "Form von werden",
+                  answers: ["wird"]
+                },
+                {
+                  id: "b2",
+                  label: "Partizip II",
+                  answers: ["verlassen"]
+                },
+                {
+                  id: "b3",
+                  label: "Hilfsverb",
+                  answers: ["haben"]
+                }
               ],
-              hint: "Zwei Angaben sind ungenau, eine ist genau.",
-              solution:
-                "Jeden Montag trifft sich unsere Lerngruppe. Wir sprechen oft Deutsch, aber wir benutzen fast nie Handys.",
+              hint: "Die Verbteile lauten hier: wird + verlassen + haben.",
+              solution: "In einer Stunde wird der Zug den Bahnhof verlassen haben.",
               explanation:
-                "Alle drei Formen beantworten die Frage 'Wie oft?'. Deshalb sind sie Mal-Angaben."
+                "Im Futur II stehen am Satzende Partizip II und Hilfsverb im Infinitiv."
             }),
             dragdrop({
-              id: "g6-dd",
-              title: "Kurztext ordnen",
-              prompt: "Baue aus den Teilen einen richtigen Satz.",
+              id: "p6-dd",
+              title: "Futur-II-Satz ordnen",
+              prompt: "Ordne die Satzteile zu einem korrekten Futur-II-Satz.",
               slots: [
                 { id: "start", label: "Anfang" },
-                { id: "mitte", label: "Mitte" },
-                { id: "ende", label: "Ende" }
+                { id: "mitte", label: "Verbteil 1" },
+                { id: "ende", label: "Verbteil 2 + Rest" }
               ],
               options: [
-                { id: "o1", label: "Nach dem Unterricht" },
-                { id: "o2", label: "kaufen wir" },
-                { id: "o3", label: "manchmal noch Brot." },
-                { id: "o4", label: "zwei Stunden" }
+                { id: "o1", label: "Bis morgen" },
+                { id: "o2", label: "wird" },
+                { id: "o3", label: "die Klasse das Projekt beendet haben." },
+                { id: "o4", label: "beendet" }
               ],
               correctMap: {
                 start: "o1",
                 mitte: "o2",
                 ende: "o3"
               },
-              hint: "Die Mal-Angabe beschreibt das Kaufen, nicht die Dauer.",
-              solution: "Nach dem Unterricht kaufen wir manchmal noch Brot.",
+              hint: "Die Klammer lautet hier: 'wird ... beendet haben'.",
+              solution: "Bis morgen wird die Klasse das Projekt beendet haben.",
               explanation:
-                "'Manchmal' ist die Mal-Angabe. 'Zwei Stunden' waere hier eine Dauer und passt nicht."
+                "Das Futur II verbindet Zukunft mit bereits abgeschlossenem Ergebnis."
             }),
             fehlertext({
-              id: "g6-fe",
-              title: "Dauer in Haeufigkeit verwandeln",
-              prompt: "Schreibe den Satz so um, dass eine Mal-Angabe verwendet wird.",
-              context: "Im Sommer fahren wir zwei Wochen ans Meer.",
+              id: "p6-fe",
+              title: "Futur II korrigieren",
+              prompt: "Korrigiere den Satz.",
+              context: "Nächste Woche wird er die Aufgabe lösen haben.",
               acceptedAnswers: [
-                "im sommer fahren wir einmal ans meer.",
-                "im sommer fahren wir einmal im jahr ans meer."
+                "nächste woche wird er die aufgabe gelöst haben",
+                "naechste woche wird er die aufgabe geloest haben"
               ],
-              hint: "Die Vorlage sagt, wie lange. Gesucht ist, wie oft.",
-              solution: "Im Sommer fahren wir einmal ans Meer.",
+              hint: "Im Futur II brauchst du das Partizip II.",
+              solution: "Nächste Woche wird er die Aufgabe gelöst haben.",
               explanation:
-                "'Zwei Wochen' ist eine Dauer. 'Einmal' ist eine Mal-Angabe und beschreibt die Haeufigkeit."
+                "Die Form 'lösen haben' ist falsch. Richtig ist 'gelöst haben'."
             }),
             erklaerung({
-              id: "g6-er",
-              title: "Wiederholung begruenden",
-              prompt: "Erklaere kurz: Warum ist 'jeden zweiten Tag' eine Mal-Angabe?",
-              keywordGroups: [["wiederholung", "regelmaessig", "haeufigkeit"], ["tag"]],
+              id: "p6-er",
+              title: "Zeitbedeutung erklären",
+              prompt: "Erkläre kurz: Was zeigt das Futur II an?",
+              keywordGroups: [["abgeschlossen", "fertig", "vollendet"], ["zukunft", "später"]],
               acceptedAnswers: [
-                "es beschreibt eine regelmaessige wiederholung an verschiedenen tagen.",
-                "jeden zweiten tag sagt, wie oft etwas wieder passiert."
+                "das futur ii zeigt, dass etwas bis zu einem spaeteren zeitpunkt abgeschlossen sein wird",
+                "mit futur ii sagt man, dass eine handlung in der zukunft schon fertig sein wird"
               ],
-              hint: "Denke an die wiederholte Handlung.",
+              hint: "Es geht um eine Handlung, die später bereits fertig ist.",
               solution:
-                "'Jeden zweiten Tag' ist eine Mal-Angabe, weil der Ausdruck eine regelmaessige Wiederholung beschreibt.",
+                "Das Futur II zeigt, dass eine Handlung bis zu einem zukünftigen Zeitpunkt abgeschlossen sein wird.",
               explanation:
-                "Nicht nur Woerter wie 'oft' oder 'nie' sind Mal-Angaben. Auch wiederholte Muster koennen Haeufigkeit ausdruecken."
+                "Darum passt das Futur II oft zu Angaben wie 'bis morgen' oder 'in einer Stunde'."
             })
           ]
         }
@@ -771,189 +780,207 @@
       id: "profi",
       rank: "04",
       title: "Profi",
-      subtitle: "Nuancen, Kombinationen und sichere Anwendung im Text",
+      subtitle: "Alle Zeiten im Überblick und im Zusammenhang anwenden",
       description:
-        "Hier werden mehrere Mal-Angaben verglichen, kombiniert und in anspruchsvolleren Saetzen angewendet.",
+        "Zum Schluss werden Perfekt, Präteritum, Plusquamperfekt, Futur I und Futur II gezielt verglichen und in kleinen Kontexten kombiniert.",
       modules: [
         {
-          id: "nuancen",
-          title: "Nuancen verstehen",
-          summary: "Feine Bedeutungsunterschiede erklaeren und korrekt in Saetzen nutzen.",
+          id: "zeiten-ueberblick",
+          title: "Überblick über alle Zeiten",
+          summary: "Zeitformen unterscheiden und passend zum Sinn auswählen.",
           tasks: [
             freitext({
-              id: "g7-ft",
-              title: "Abgestufte Angabe finden",
-              prompt: "Schreibe eine Mal-Angabe, die bedeutet: fast immer, aber nicht ganz.",
-              acceptedAnswers: ["meistens", "fast immer"],
-              hint: "Die gesuchte Form ist staerker als 'oft', aber schwaecher als 'immer'.",
-              solution: "meistens",
+              id: "p7-ft",
+              title: "Perfekt im Überblick",
+              prompt: "Formuliere den Satz im Perfekt: Aylin besucht ihre Tante.",
+              acceptedAnswers: ["aylin hat ihre tante besucht"],
+              hint: "Du brauchst 'hat' und das Partizip II.",
+              solution: "Aylin hat ihre Tante besucht.",
               explanation:
-                "'Meistens' ist eine abgestufte Mal-Angabe. Sie bedeutet: in den meisten Faellen."
+                "Auch im Überblick über alle Zeiten muss zuerst die passende Grundform sicher sitzen."
             }),
             lueckentext({
-              id: "g7-lt",
-              title: "Zwei Mal-Angaben kombinieren",
-              prompt: "Ergaenze die Luecken passend.",
-              context: "1 = fast immer. 2 = kein einziges Mal.",
-              segments: ["In Pruefungswochen lerne ich ", ", aber in den Ferien lerne ich ", "."],
+              id: "p7-lt",
+              title: "Mehrere Zeiten ergänzen",
+              prompt: "Ergänze die passende Zeitform in jeder Lücke.",
+              context: "1 = Präteritum, 2 = Perfekt, 3 = Futur I.",
+              segments: ["Gestern ", " ich krank, deshalb ", " ich zu Hause geblieben. Morgen ", " ich wieder in die Schule gehen."],
               blanks: [
-                { id: "b1", label: "Luecke 1", answers: ["meistens", "fast immer"] },
-                { id: "b2", label: "Luecke 2", answers: ["nie"] }
+                {
+                  id: "b1",
+                  label: "Lücke 1",
+                  answers: ["war"]
+                },
+                {
+                  id: "b2",
+                  label: "Lücke 2",
+                  answers: ["bin"]
+                },
+                {
+                  id: "b3",
+                  label: "Lücke 3",
+                  answers: ["werde"]
+                }
               ],
-              hint: "Die beiden Angaben stehen in starkem Gegensatz.",
-              solution: "In Pruefungswochen lerne ich meistens, aber in den Ferien lerne ich nie.",
+              hint: "Die drei Lücken gehören zu drei verschiedenen Zeitformen.",
+              solution: "Gestern war ich krank, deshalb bin ich zu Hause geblieben. Morgen werde ich wieder in die Schule gehen.",
               explanation:
-                "Beide Woerter sind Mal-Angaben. Zusammen zeigen sie einen klaren Gegensatz in der Haeufigkeit."
+                "Präteritum, Perfekt und Futur I haben verschiedene Aufgaben. Hier zeigt jede Lücke eine andere Funktion."
             }),
             dragdrop({
-              id: "g7-dd",
-              title: "Komplexeren Satz ordnen",
-              prompt: "Ordne die Teile zu einem richtigen Satz.",
+              id: "p7-dd",
+              title: "Zeitfolge ordnen",
+              prompt: "Ordne die Satzteile zu einem sinnvollen Satz.",
               slots: [
-                { id: "start", label: "Anfang" },
-                { id: "mitte", label: "Mitte" },
-                { id: "ende", label: "Ende" }
+                { id: "start", label: "Zeitangabe" },
+                { id: "mitte", label: "frühere Handlung" },
+                { id: "ende", label: "spätere Handlung" }
               ],
               options: [
-                { id: "o1", label: "Wenn wir Gruppenarbeit haben," },
-                { id: "o2", label: "spricht Nora" },
-                { id: "o3", label: "meistens zuerst." },
-                { id: "o4", label: "um 9 Uhr" }
+                { id: "o1", label: "Vor dem Unterricht" },
+                { id: "o2", label: "hatte Ben schon gefrühstückt," },
+                { id: "o3", label: "jetzt trinkt er nur noch Tee." },
+                { id: "o4", label: "frühstückt" }
               ],
               correctMap: {
                 start: "o1",
                 mitte: "o2",
                 ende: "o3"
               },
-              hint: "Die Mal-Angabe steht hier hinter dem Verbteil.",
-              solution: "Wenn wir Gruppenarbeit haben, spricht Nora meistens zuerst.",
+              hint: "Die frühere Handlung steht im Plusquamperfekt.",
+              solution: "Vor dem Unterricht hatte Ben schon gefrühstückt, jetzt trinkt er nur noch Tee.",
               explanation:
-                "'Meistens' beschreibt die Haeufigkeit der Handlung 'spricht zuerst'. Der Nebensatz veraendert das nicht."
+                "Im Satz werden zwei Zeitebenen verbunden: Vorvergangenheit und Gegenwart."
             }),
             fehlertext({
-              id: "g7-fe",
-              title: "Widerspruch beseitigen",
-              prompt: "Im Satz widersprechen sich die Mal-Angaben. Schreibe ihn sinnvoll neu auf.",
-              context: "Ich komme immer manchmal zu spaet.",
-              acceptedAnswers: [
-                "ich komme manchmal zu spaet.",
-                "ich komme immer zu spaet."
-              ],
-              hint: "Eine starke und eine schwache Angabe passen hier nicht zusammen.",
-              solution: "Ich komme manchmal zu spaet.",
+              id: "p7-fe",
+              title: "Futur II erkennen",
+              prompt: "Korrigiere den Satz.",
+              context: "Bis morgen hat Lea die Aufgabe beendet haben.",
+              acceptedAnswers: ["bis morgen wird lea die aufgabe beendet haben"],
+              hint: "Mit 'bis morgen' passt hier das Futur II.",
+              solution: "Bis morgen wird Lea die Aufgabe beendet haben.",
               explanation:
-                "'Immer' und 'manchmal' widersprechen sich in einem einfachen Satz. Eine klare Mal-Angabe muss eindeutig sein."
+                "Die Verbform braucht 'wird' als finites Verb und am Ende 'beendet haben'."
             }),
             erklaerung({
-              id: "g7-er",
-              title: "Zwei Angaben unterscheiden",
-              prompt: "Erklaere kurz: Wie kann in einem Satz sowohl eine Zeitangabe als auch eine Mal-Angabe stehen?",
-              keywordGroups: [["wann", "zeitpunkt"], ["wie oft", "haeufigkeit"]],
+              id: "p7-er",
+              title: "Zeitunterschied erklären",
+              prompt: "Erkläre kurz den Unterschied zwischen Perfekt und Plusquamperfekt.",
+              keywordGroups: [["perfekt", "vergangenheit"], ["plusquamperfekt", "vorvergangenheit", "vorher"]],
               acceptedAnswers: [
-                "eine zeitangabe beantwortet wann und eine mal-angabe beantwortet wie oft.",
-                "in einem satz kann man sagen wann etwas passiert und wie oft es passiert."
+                "das perfekt beschreibt vergangenheit, das plusquamperfekt eine noch fruehere vergangenheit vor einer anderen handlung",
+                "plusquamperfekt ist vorvergangenheit, perfekt beschreibt eine normale vergangene handlung"
               ],
-              hint: "Die beiden Angaben beantworten verschiedene Fragen.",
+              hint: "Eine Form ist Vergangenheit, die andere Vorvergangenheit.",
               solution:
-                "Eine Zeitangabe beantwortet 'Wann?'. Eine Mal-Angabe beantwortet 'Wie oft?'. Beides kann im selben Satz stehen.",
+                "Das Perfekt beschreibt eine vergangene Handlung. Das Plusquamperfekt beschreibt eine noch frühere Handlung vor einer anderen Vergangenheit.",
               explanation:
-                "Zum Beispiel in 'Jeden Montag um 8 Uhr beginnt der Kurs' ist 'jeden Montag' die Mal-Angabe und 'um 8 Uhr' die Zeitangabe."
+                "Darum braucht man das Plusquamperfekt oft in Verbindung mit Präteritum oder Perfekt."
             })
           ]
         },
         {
-          id: "transfer-text",
-          title: "Sichere Anwendung im Text",
-          summary: "Mal-Angaben in kleinen Texten praezise und reflektiert einsetzen.",
+          id: "zeiten-im-kontext",
+          title: "Zeiten im Zusammenhang",
+          summary: "Zeitformen in kleinen Texten und sinnvollen Folgen sicher anwenden.",
           tasks: [
             freitext({
-              id: "g8-ft",
-              title: "Satz aus Stichwoertern bilden",
-              prompt: "Schreibe den Satz richtig auf: am Wochenende / wir / meistens / zusammen fruehstuecken",
+              id: "p8-ft",
+              title: "Satz in eine andere Zeitform setzen",
+              prompt: "Schreibe den Satz im Perfekt: Früher spielte Mira Klavier.",
               acceptedAnswers: [
-                "am wochenende fruehstuecken wir meistens zusammen.",
-                "wir fruehstuecken am wochenende meistens zusammen."
+                "früher hat mira klavier gespielt",
+                "frueher hat mira klavier gespielt"
               ],
-              hint: "Die Mal-Angabe kann im Vorfeld oder im Mittelfeld stehen.",
-              solution: "Am Wochenende fruehstuecken wir meistens zusammen.",
+              hint: "Das Vollverb heißt im Partizip II 'gespielt'.",
+              solution: "Früher hat Mira Klavier gespielt.",
               explanation:
-                "Der Satz enthaelt eine Zeitangabe und eine Mal-Angabe. 'Meistens' beantwortet die Frage 'Wie oft?'."
+                "Du wandelst hier eine Präteritumform in das Perfekt um."
             }),
             lueckentext({
-              id: "g8-lt",
-              title: "Mini-Text mit Abstufungen",
-              prompt: "Ergaenze den kurzen Text.",
-              context: "1 = an jedem Abend. 2 = haeufig. 3 = kein einziges Mal.",
-              segments: [
-                "Vor Pruefungen wiederhole ich ",
-                " den Stoff. Meine Schwester lernt ",
-                ", aber mein Bruder lernt ",
-                "."
-              ],
+              id: "p8-lt",
+              title: "Mini-Text ergänzen",
+              prompt: "Ergänze den kleinen Text mit den passenden Formen.",
+              context: "1 = Plusquamperfekt-Hilfsverb, 2 = Partizip II, 3 = Präteritum.",
+              segments: ["Als wir am Bahnhof ankamen, ", " der Zug schon ", ". Deshalb ", " wir ein Taxi."],
               blanks: [
-                { id: "b1", label: "Luecke 1", answers: ["jeden abend"] },
-                { id: "b2", label: "Luecke 2", answers: ["oft"] },
-                { id: "b3", label: "Luecke 3", answers: ["nie"] }
+                {
+                  id: "b1",
+                  label: "Lücke 1",
+                  answers: ["war"]
+                },
+                {
+                  id: "b2",
+                  label: "Lücke 2",
+                  answers: ["abgefahren"]
+                },
+                {
+                  id: "b3",
+                  label: "Lücke 3",
+                  answers: ["nahmen"]
+                }
               ],
-              hint: "Die drei Luecken zeigen drei verschiedene Stufen der Haeufigkeit.",
-              solution:
-                "Vor Pruefungen wiederhole ich jeden Abend den Stoff. Meine Schwester lernt oft, aber mein Bruder lernt nie.",
+              hint: "Die frühere Handlung ist schon abgeschlossen, die nächste steht im Präteritum.",
+              solution: "Als wir am Bahnhof ankamen, war der Zug schon abgefahren. Deshalb nahmen wir ein Taxi.",
               explanation:
-                "Der Text zeigt eine genaue, eine mittlere und eine totale Verneinung als Mal-Angaben."
+                "Hier sieht man gut, wie Plusquamperfekt und Präteritum zusammenarbeiten."
             }),
             dragdrop({
-              id: "g8-dd",
-              title: "Abschluss-Satz ordnen",
-              prompt: "Ordne die Teile so, dass ein klarer Satz entsteht.",
+              id: "p8-dd",
+              title: "Futur im Kontext ordnen",
+              prompt: "Ordne die Satzteile zu einem korrekten Satz.",
               slots: [
-                { id: "start", label: "Anfang" },
-                { id: "mitte", label: "Mitte" },
-                { id: "ende", label: "Ende" }
+                { id: "start", label: "Zeitangabe" },
+                { id: "mitte", label: "Verb" },
+                { id: "ende", label: "Rest" }
               ],
               options: [
-                { id: "o1", label: "Im Sprachkurs" },
-                { id: "o2", label: "arbeiten wir" },
-                { id: "o3", label: "mehrmals pro Woche in Tandems." },
-                { id: "o4", label: "zwei Stunden" }
+                { id: "o1", label: "Nächste Woche" },
+                { id: "o2", label: "wird" },
+                { id: "o3", label: "Frau Keller die Tests zurückgeben." },
+                { id: "o4", label: "zurückgegeben" }
               ],
               correctMap: {
                 start: "o1",
                 mitte: "o2",
                 ende: "o3"
               },
-              hint: "Die Mal-Angabe mit 'pro Woche' ist die richtige Wahl.",
-              solution: "Im Sprachkurs arbeiten wir mehrmals pro Woche in Tandems.",
+              hint: "Es geht um eine einfache Zukunft, nicht um Futur II.",
+              solution: "Nächste Woche wird Frau Keller die Tests zurückgeben.",
               explanation:
-                "'Mehrmals pro Woche' ist eine klare Mal-Angabe. 'Zwei Stunden' wuerde wieder nur eine Dauer nennen."
+                "Mit Futur I kündigt der Satz eine Handlung in der Zukunft an."
             }),
             fehlertext({
-              id: "g8-fe",
-              title: "Fehlerhaften Textsatz korrigieren",
-              prompt: "Korrigiere den Satz so, dass eine saubere Mal-Angabe verwendet wird.",
-              context: "Unsere Lerngruppe trifft sich monatlich im Monat.",
+              id: "p8-fe",
+              title: "Zeitfolge im Satz verbessern",
+              prompt: "Korrigiere den Satz so, dass die Zeitfolge stimmt.",
+              context: "Bevor ich esse, hatte ich mir die Hände gewaschen.",
               acceptedAnswers: [
-                "unsere lerngruppe trifft sich monatlich.",
-                "unsere lerngruppe trifft sich einmal im monat."
+                "bevor ich aß hatte ich mir die hände gewaschen",
+                "bevor ich aß, hatte ich mir die hände gewaschen",
+                "bevor ich ass hatte ich mir die haende gewaschen",
+                "bevor ich ass, hatte ich mir die haende gewaschen"
               ],
-              hint: "Der Satz sagt dieselbe Information doppelt.",
-              solution: "Unsere Lerngruppe trifft sich monatlich.",
+              hint: "Wenn der Hauptsatz in der Vergangenheit steht, muss auch der Nebensatz dazu passen.",
+              solution: "Bevor ich aß, hatte ich mir die Hände gewaschen.",
               explanation:
-                "'Monatlich' und 'im Monat' transportieren hier dieselbe Information. Eine klare Formulierung reicht aus."
+                "Die frühere Handlung steht im Plusquamperfekt, die spätere Erzählhandlung im Präteritum."
             }),
             erklaerung({
-              id: "g8-er",
-              title: "Reflexion zum Sprachgebrauch",
-              prompt: "Erklaere kurz den Unterschied zwischen 'monatlich' und 'einmal im Monat'.",
-              keywordGroups: [["gleiche", "aehnlich", "bedeutung"], ["stil", "knapper", "ausfuehrlicher"]],
+              id: "p8-er",
+              title: "Zeiten kombinieren erklären",
+              prompt: "Erkläre kurz: Warum kombiniert man in Erzählungen oft Präteritum und Plusquamperfekt?",
+              keywordGroups: [["präteritum", "praeteritum"], ["plusquamperfekt", "vorher", "früher", "frueher"]],
               acceptedAnswers: [
-                "beides meint ungefaehr das gleiche. monatlich ist knapper, einmal im monat ist ausfuehrlicher.",
-                "die bedeutung ist fast gleich. monatlich ist kurz, einmal im monat ist laenger."
+                "weil das praeteritum die haupthandlung erzaehlt und das plusquamperfekt zeigt, was vorher passiert war",
+                "in erzaehlungen beschreibt das praeteritum die laufende vergangenheit und das plusquamperfekt die vorvergangenheit"
               ],
-              hint: "Es geht um Bedeutung und Stil, nicht um richtig oder falsch.",
+              hint: "Eine Form erzählt die Haupthandlung, die andere springt noch weiter zurück.",
               solution:
-                "'Monatlich' und 'einmal im Monat' meinen fast dasselbe. 'Monatlich' klingt knapper, 'einmal im Monat' etwas ausfuehrlicher.",
+                "In Erzählungen beschreibt das Präteritum die Haupthandlung. Das Plusquamperfekt zeigt, was schon vorher passiert war.",
               explanation:
-                "Fortgeschrittene Lernende muessen nicht nur richtig entscheiden, sondern auch sprachliche Nuancen erkennen."
+                "So kann man zeitliche Beziehungen in einem Text klar machen."
             })
           ]
         }
@@ -980,15 +1007,15 @@
     });
   });
 
-  window.MalAngabeWorkshopData = {
+  window.SprachwerkstattZeitenData = {
     passThreshold: 60,
     maxAttempts: 3,
     taskTypeLabels: {
       freitext: "Freitext",
-      lueckentext: "Lueckentext",
+      lueckentext: "Lückentext",
       dragdrop: "Drag and Drop",
       fehlertext: "Fehlertext",
-      erklaerung: "Erklaerung"
+      erklaerung: "Erklärung"
     },
     levels: levels,
     moduleSequence: moduleSequence,
