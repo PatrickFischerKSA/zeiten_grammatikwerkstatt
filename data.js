@@ -58,26 +58,18 @@
     return JSON.parse(JSON.stringify(value));
   }
 
-  function replaceText(value, replacements) {
-    let result = String(value);
-
-    Object.keys(replacements).forEach(function (source) {
-      const target = replacements[source];
-      result = result.split(source).join(target);
-      result = result.split(source.toLowerCase()).join(String(target).toLowerCase());
-    });
-
-    return result;
+  function replaceText(value) {
+    return String(value);
   }
 
-  function transformValue(value, replacements) {
+  function transformValue(value) {
     if (typeof value === "string") {
-      return replaceText(value, replacements);
+      return replaceText(value);
     }
 
     if (Array.isArray(value)) {
       return value.map(function (entry) {
-        return transformValue(entry, replacements);
+        return transformValue(entry);
       });
     }
 
@@ -85,7 +77,7 @@
       const copy = {};
 
       Object.keys(value).forEach(function (key) {
-        copy[key] = key === "id" ? value[key] : transformValue(value[key], replacements);
+        copy[key] = key === "id" ? value[key] : transformValue(value[key]);
       });
 
       return copy;
@@ -160,7 +152,7 @@
   ];
 
   function createTaskVariant(task, variant) {
-    const copy = transformValue(cloneValue(task), variant.replacements);
+    const copy = cloneValue(task);
     copy.id = task.id + variant.suffix;
     copy.title = String(copy.title || task.title || "") + variant.titleSuffix;
     return copy;
@@ -203,8 +195,8 @@
             lueckentext({
               id: "p1-lt",
               title: "Hilfsverb und Partizip ergänzen",
-              prompt: "Ergänze die Perfektform vollständig.",
-              context: "Achte auf die Satzklammer.",
+              prompt: "Ergänze Hilfsverb und Partizip II zum Verb 'spielen'.",
+              context: "Verb: spielen. Achte auf die Satzklammer.",
               segments: ["Gestern ", " wir lange im Park ", "."],
               blanks: [
                 {
@@ -251,7 +243,7 @@
             fehlertext({
               id: "p1-fe",
               title: "Falsches Hilfsverb korrigieren",
-              prompt: "Korrigiere den Satz.",
+              prompt: "Korrigiere den Satz im Perfekt.",
               context: "Wir sind einen Film gesehen.",
               acceptedAnswers: ["wir haben einen film gesehen"],
               hint: "Das Verb 'sehen' bildet das Perfekt mit 'haben'.",
@@ -294,7 +286,7 @@
             lueckentext({
               id: "p2-lt",
               title: "Zwei Präteritumformen ergänzen",
-              prompt: "Ergänze die Verben im Präteritum.",
+              prompt: "Ergänze die beiden Verben im Präteritum: sein und bleiben.",
               context: "Beide Formen stehen in einer Erzählung.",
               segments: ["Früher ", " mein Lehrer streng, aber er ", " immer fair."],
               blanks: [
@@ -398,7 +390,7 @@
             lueckentext({
               id: "p3-lt",
               title: "Plusquamperfekt ergänzen",
-              prompt: "Ergänze die Vorvergangenheit.",
+              prompt: "Ergänze Hilfsverb und Partizip II im Plusquamperfekt.",
               context: "Die Handlung vor dem Unterricht steht im Plusquamperfekt.",
               segments: ["Bevor der Unterricht begann, ", " wir alles ", "."],
               blanks: [
@@ -446,7 +438,7 @@
             fehlertext({
               id: "p3-fe",
               title: "Zeitfolge korrigieren",
-              prompt: "Korrigiere den Satz.",
+              prompt: "Korrigiere den Satz so, dass das Plusquamperfekt stimmt.",
               context: "Nachdem wir gegessen haben, gingen wir spazieren.",
               acceptedAnswers: [
                 "nachdem wir gegessen hatten gingen wir spazieren",
@@ -495,7 +487,7 @@
             lueckentext({
               id: "p4-lt",
               title: "Modalverben im Präteritum",
-              prompt: "Ergänze die beiden Modalverben im Präteritum.",
+              prompt: "Ergänze die beiden Modalverben dürfen und können im Präteritum.",
               context: "Es geht um Regeln und Möglichkeiten in der Kindheit.",
               segments: ["Als Kind ", " ich nie lange fernsehen, aber am Wochenende ", " ich ausschlafen."],
               blanks: [
@@ -518,7 +510,7 @@
             dragdrop({
               id: "p4-dd",
               title: "Perfekt mit Doppelinfinitiv ordnen",
-              prompt: "Ordne die Satzteile zu einem korrekten Satz.",
+              prompt: "Ordne die Satzteile zu einem korrekten Perfektsatz mit Modalverb.",
               slots: [
                 { id: "start", label: "Anfang" },
                 { id: "mitte", label: "Verbteil 1" },
@@ -543,7 +535,7 @@
             fehlertext({
               id: "p4-fe",
               title: "Doppelinfinitiv verbessern",
-              prompt: "Korrigiere den Satz.",
+              prompt: "Korrigiere den Satz im Perfekt mit Modalverb.",
               context: "Wir haben ins Kino gehen gekonnt.",
               acceptedAnswers: [
                 "wir haben ins kino gehen können",
@@ -602,7 +594,7 @@
             lueckentext({
               id: "p5-lt",
               title: "Futur I ergänzen",
-              prompt: "Ergänze den Satz im Futur I.",
+              prompt: "Ergänze den Satz im Futur I mit werden und lesen.",
               context: "Achte auf 'werden' und den Infinitiv.",
               segments: ["Nächste Woche ", " wir das Kapitel zu Ende ", "."],
               blanks: [
@@ -650,7 +642,7 @@
             fehlertext({
               id: "p5-fe",
               title: "Futur I verbessern",
-              prompt: "Korrigiere den Satz.",
+              prompt: "Korrigiere den Satz im Futur I.",
               context: "Ich werde morgen gegangen.",
               acceptedAnswers: ["ich werde morgen gehen"],
               hint: "Nach 'werde' steht im Futur I der Infinitiv.",
@@ -693,7 +685,7 @@
             lueckentext({
               id: "p6-lt",
               title: "Futur II ergänzen",
-              prompt: "Ergänze den Satz im Futur II.",
+              prompt: "Ergänze den Satz im Futur II mit wird, verlassen und haben.",
               context: "Achte auf die dreiteilige Verbform.",
               segments: ["In einer Stunde ", " der Zug den Bahnhof ", " ", "."],
               blanks: [
@@ -746,7 +738,7 @@
             fehlertext({
               id: "p6-fe",
               title: "Futur II korrigieren",
-              prompt: "Korrigiere den Satz.",
+              prompt: "Korrigiere den Satz im Futur II.",
               context: "Nächste Woche wird er die Aufgabe lösen haben.",
               acceptedAnswers: [
                 "nächste woche wird er die aufgabe gelöst haben",
@@ -802,7 +794,7 @@
             lueckentext({
               id: "p7-lt",
               title: "Mehrere Zeiten ergänzen",
-              prompt: "Ergänze die passende Zeitform in jeder Lücke.",
+              prompt: "Ergänze die passende Zeitform: war, bin, werde.",
               context: "1 = Präteritum, 2 = Perfekt, 3 = Futur I.",
               segments: ["Gestern ", " ich krank, deshalb ", " ich zu Hause geblieben. Morgen ", " ich wieder in die Schule gehen."],
               blanks: [
@@ -830,7 +822,7 @@
             dragdrop({
               id: "p7-dd",
               title: "Zeitfolge ordnen",
-              prompt: "Ordne die Satzteile zu einem sinnvollen Satz.",
+              prompt: "Ordne die Satzteile zu einem sinnvollen Satz mit Plusquamperfekt und Gegenwart.",
               slots: [
                 { id: "start", label: "Zeitangabe" },
                 { id: "mitte", label: "frühere Handlung" },
@@ -855,7 +847,7 @@
             fehlertext({
               id: "p7-fe",
               title: "Futur II erkennen",
-              prompt: "Korrigiere den Satz.",
+              prompt: "Korrigiere den Satz im Futur II.",
               context: "Bis morgen hat Lea die Aufgabe beendet haben.",
               acceptedAnswers: ["bis morgen wird lea die aufgabe beendet haben"],
               hint: "Mit 'bis morgen' passt hier das Futur II.",
@@ -901,7 +893,7 @@
             lueckentext({
               id: "p8-lt",
               title: "Mini-Text ergänzen",
-              prompt: "Ergänze den kleinen Text mit den passenden Formen.",
+              prompt: "Ergänze den Mini-Text mit war, abgefahren und nahmen.",
               context: "1 = Plusquamperfekt-Hilfsverb, 2 = Partizip II, 3 = Präteritum.",
               segments: ["Als wir am Bahnhof ankamen, ", " der Zug schon ", ". Deshalb ", " wir ein Taxi."],
               blanks: [
@@ -929,7 +921,7 @@
             dragdrop({
               id: "p8-dd",
               title: "Futur im Kontext ordnen",
-              prompt: "Ordne die Satzteile zu einem korrekten Satz.",
+              prompt: "Ordne die Satzteile zu einem korrekten Satz im Futur I.",
               slots: [
                 { id: "start", label: "Zeitangabe" },
                 { id: "mitte", label: "Verb" },
