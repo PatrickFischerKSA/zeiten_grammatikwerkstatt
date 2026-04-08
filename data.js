@@ -186,7 +186,10 @@
               id: "p1-ft",
               title: "Perfekt aus dem Präsens bilden",
               prompt: "Bilde das Perfekt: Ich lerne Deutsch.",
-              acceptedAnswers: ["ich habe deutsch gelernt"],
+              acceptedAnswers: [
+                "Ich habe Deutsch gelernt.",
+                "Deutsch habe ich gelernt."
+              ],
               hint: "Du brauchst ein Hilfsverb und das Partizip II.",
               solution: "Ich habe Deutsch gelernt.",
               explanation:
@@ -218,7 +221,7 @@
             dragdrop({
               id: "p1-dd",
               title: "Perfektsatz ordnen",
-              prompt: "Ordne die Satzteile zu einem korrekten Perfektsatz.",
+              prompt: "Ordne die Satzteile zu einem korrekten Perfektsatz mit dem Verb 'machen'.",
               slots: [
                 { id: "start", label: "Anfang" },
                 { id: "mitte", label: "Verbteil 1" },
@@ -245,7 +248,10 @@
               title: "Falsches Hilfsverb korrigieren",
               prompt: "Korrigiere den Satz im Perfekt.",
               context: "Wir sind einen Film gesehen.",
-              acceptedAnswers: ["wir haben einen film gesehen"],
+              acceptedAnswers: [
+                "Wir haben einen Film gesehen.",
+                "Einen Film haben wir gesehen."
+              ],
               hint: "Das Verb 'sehen' bildet das Perfekt mit 'haben'.",
               solution: "Wir haben einen Film gesehen.",
               explanation:
@@ -277,7 +283,10 @@
               id: "p2-ft",
               title: "Präteritum von haben bilden",
               prompt: "Bilde das Präteritum: Ich habe keine Zeit.",
-              acceptedAnswers: ["ich hatte keine zeit"],
+              acceptedAnswers: [
+                "Ich hatte keine Zeit.",
+                "Keine Zeit hatte ich."
+              ],
               hint: "Die Präteritumform von 'haben' ist unregelmäßig.",
               solution: "Ich hatte keine Zeit.",
               explanation:
@@ -309,7 +318,7 @@
             dragdrop({
               id: "p2-dd",
               title: "Erzählsatz ordnen",
-              prompt: "Ordne die Satzteile zu einem korrekten Satz im Präteritum.",
+              prompt: "Ordne die Satzteile zu einem korrekten Satz im Präteritum mit dem Verb 'kommen'.",
               slots: [
                 { id: "start", label: "Anfang" },
                 { id: "mitte", label: "Verb" },
@@ -336,7 +345,10 @@
               title: "Unregelmäßige Form verbessern",
               prompt: "Korrigiere den Satz im Präteritum.",
               context: "Gestern gehte ich früh ins Bett.",
-              acceptedAnswers: ["gestern ging ich früh ins bett", "gestern ging ich frueh ins bett"],
+              acceptedAnswers: [
+                "Gestern ging ich früh ins Bett.",
+                "Ich ging gestern früh ins Bett."
+              ],
               hint: "Das Verb 'gehen' bildet das Präteritum unregelmäßig.",
               solution: "Gestern ging ich früh ins Bett.",
               explanation:
@@ -379,8 +391,8 @@
               title: "Vorvergangenheit bilden",
               prompt: "Bilde das Plusquamperfekt von dem ersten Satz: Lara schließt die Tür ab. Dann ging sie los.",
               acceptedAnswers: [
-                "lara hatte die tür abgeschlossen",
-                "lara hatte die tuer abgeschlossen"
+                "Lara hatte die Tür abgeschlossen.",
+                "Die Tür hatte Lara abgeschlossen."
               ],
               hint: "Du brauchst 'hatte' oder 'war' und ein Partizip II.",
               solution: "Lara hatte die Tür abgeschlossen.",
@@ -390,8 +402,8 @@
             lueckentext({
               id: "p3-lt",
               title: "Plusquamperfekt ergänzen",
-              prompt: "Ergänze Hilfsverb und Partizip II im Plusquamperfekt.",
-              context: "Die Handlung vor dem Unterricht steht im Plusquamperfekt.",
+              prompt: "Ergänze Hilfsverb und Partizip II im Plusquamperfekt zum Verb 'vorbereiten'.",
+              context: "Die Handlung vor dem Unterricht steht im Plusquamperfekt. Das Vollverb heißt 'vorbereiten'.",
               segments: ["Bevor der Unterricht begann, ", " wir alles ", "."],
               blanks: [
                 {
@@ -413,7 +425,7 @@
             dragdrop({
               id: "p3-dd",
               title: "Vorher und nachher ordnen",
-              prompt: "Ordne die Satzteile zu einem korrekten Satz mit Plusquamperfekt.",
+              prompt: "Ordne die Satzteile zu einem korrekten Satz mit Plusquamperfekt und dem Verb 'frühstücken'.",
               slots: [
                 { id: "start", label: "Nebensatzanfang" },
                 { id: "mitte", label: "Nebensatzrest" },
@@ -441,8 +453,8 @@
               prompt: "Korrigiere den Satz so, dass das Plusquamperfekt stimmt.",
               context: "Nachdem wir gegessen haben, gingen wir spazieren.",
               acceptedAnswers: [
-                "nachdem wir gegessen hatten gingen wir spazieren",
-                "nachdem wir gegessen hatten, gingen wir spazieren"
+                "Nachdem wir gegessen hatten, gingen wir spazieren.",
+                "Wir gingen spazieren, nachdem wir gegessen hatten."
               ],
               hint: "Die frühere Handlung braucht hier das Plusquamperfekt.",
               solution: "Nachdem wir gegessen hatten, gingen wir spazieren.",
@@ -476,8 +488,8 @@
               title: "Perfekt mit Modalverb bilden",
               prompt: "Bilde das Perfekt: Ich muss früh aufstehen.",
               acceptedAnswers: [
-                "ich habe früh aufstehen müssen",
-                "ich habe frueh aufstehen muessen"
+                "Ich habe früh aufstehen müssen.",
+                "Früh habe ich aufstehen müssen."
               ],
               hint: "Bei Modalverben stehen am Ende zwei Infinitive.",
               solution: "Ich habe früh aufstehen müssen.",
@@ -510,7 +522,7 @@
             dragdrop({
               id: "p4-dd",
               title: "Perfekt mit Doppelinfinitiv ordnen",
-              prompt: "Ordne die Satzteile zu einem korrekten Perfektsatz mit Modalverb.",
+              prompt: "Ordne die Satzteile zu einem korrekten Perfektsatz mit den Verben 'kommen' und 'können'.",
               slots: [
                 { id: "start", label: "Anfang" },
                 { id: "mitte", label: "Verbteil 1" },
@@ -538,8 +550,8 @@
               prompt: "Korrigiere den Satz im Perfekt mit Modalverb.",
               context: "Wir haben ins Kino gehen gekonnt.",
               acceptedAnswers: [
-                "wir haben ins kino gehen können",
-                "wir haben ins kino gehen koennen"
+                "Wir haben ins Kino gehen können.",
+                "Ins Kino haben wir gehen können."
               ],
               hint: "Im Perfekt mit Modalverb bleibt die Form meistens Infinitiv.",
               solution: "Wir haben ins Kino gehen können.",
@@ -583,8 +595,8 @@
               title: "Zukunft ausdrücken",
               prompt: "Bilde das Futur I: Morgen lerne ich für die Prüfung.",
               acceptedAnswers: [
-                "morgen werde ich für die prüfung lernen",
-                "morgen werde ich fuer die pruefung lernen"
+                "Morgen werde ich für die Prüfung lernen.",
+                "Ich werde morgen für die Prüfung lernen."
               ],
               hint: "Futur I = werden + Infinitiv.",
               solution: "Morgen werde ich für die Prüfung lernen.",
@@ -617,7 +629,7 @@
             dragdrop({
               id: "p5-dd",
               title: "Zukunftssatz ordnen",
-              prompt: "Ordne die Satzteile zu einem korrekten Futur-I-Satz.",
+              prompt: "Ordne die Satzteile zu einem korrekten Futur-I-Satz mit dem Verb 'studieren'.",
               slots: [
                 { id: "start", label: "Anfang" },
                 { id: "mitte", label: "Verb" },
@@ -644,7 +656,10 @@
               title: "Futur I verbessern",
               prompt: "Korrigiere den Satz im Futur I.",
               context: "Ich werde morgen gegangen.",
-              acceptedAnswers: ["ich werde morgen gehen"],
+              acceptedAnswers: [
+                "Ich werde morgen gehen.",
+                "Morgen werde ich gehen."
+              ],
               hint: "Nach 'werde' steht im Futur I der Infinitiv.",
               solution: "Ich werde morgen gehen.",
               explanation:
@@ -676,7 +691,11 @@
               id: "p6-ft",
               title: "Abgeschlossene Zukunft bilden",
               prompt: "Bilde das Futur II: Bis 18 Uhr schreibt Lara den Bericht.",
-              acceptedAnswers: ["bis 18 uhr wird lara den bericht geschrieben haben"],
+              acceptedAnswers: [
+                "Bis 18 Uhr wird Lara den Bericht geschrieben haben.",
+                "Lara wird bis 18 Uhr den Bericht geschrieben haben.",
+                "Den Bericht wird Lara bis 18 Uhr geschrieben haben."
+              ],
               hint: "Futur II = werden + Partizip II + haben/sein.",
               solution: "Bis 18 Uhr wird Lara den Bericht geschrieben haben.",
               explanation:
@@ -713,7 +732,7 @@
             dragdrop({
               id: "p6-dd",
               title: "Futur-II-Satz ordnen",
-              prompt: "Ordne die Satzteile zu einem korrekten Futur-II-Satz.",
+              prompt: "Ordne die Satzteile zu einem korrekten Futur-II-Satz mit den Verben 'beenden' und 'haben'.",
               slots: [
                 { id: "start", label: "Anfang" },
                 { id: "mitte", label: "Verbteil 1" },
@@ -741,8 +760,8 @@
               prompt: "Korrigiere den Satz im Futur II.",
               context: "Nächste Woche wird er die Aufgabe lösen haben.",
               acceptedAnswers: [
-                "nächste woche wird er die aufgabe gelöst haben",
-                "naechste woche wird er die aufgabe geloest haben"
+                "Nächste Woche wird er die Aufgabe gelöst haben.",
+                "Er wird nächste Woche die Aufgabe gelöst haben."
               ],
               hint: "Im Futur II brauchst du das Partizip II.",
               solution: "Nächste Woche wird er die Aufgabe gelöst haben.",
@@ -785,7 +804,7 @@
               id: "p7-ft",
               title: "Perfekt im Überblick",
               prompt: "Formuliere den Satz im Perfekt: Aylin besucht ihre Tante.",
-              acceptedAnswers: ["aylin hat ihre tante besucht"],
+              acceptedAnswers: ["Aylin hat ihre Tante besucht."],
               hint: "Du brauchst 'hat' und das Partizip II.",
               solution: "Aylin hat ihre Tante besucht.",
               explanation:
@@ -822,7 +841,7 @@
             dragdrop({
               id: "p7-dd",
               title: "Zeitfolge ordnen",
-              prompt: "Ordne die Satzteile zu einem sinnvollen Satz mit Plusquamperfekt und Gegenwart.",
+              prompt: "Ordne die Satzteile zu einem sinnvollen Satz mit den Verben 'frühstücken' und 'trinken'.",
               slots: [
                 { id: "start", label: "Zeitangabe" },
                 { id: "mitte", label: "frühere Handlung" },
@@ -849,7 +868,10 @@
               title: "Futur II erkennen",
               prompt: "Korrigiere den Satz im Futur II.",
               context: "Bis morgen hat Lea die Aufgabe beendet haben.",
-              acceptedAnswers: ["bis morgen wird lea die aufgabe beendet haben"],
+              acceptedAnswers: [
+                "Bis morgen wird Lea die Aufgabe beendet haben.",
+                "Lea wird bis morgen die Aufgabe beendet haben."
+              ],
               hint: "Mit 'bis morgen' passt hier das Futur II.",
               solution: "Bis morgen wird Lea die Aufgabe beendet haben.",
               explanation:
@@ -882,8 +904,8 @@
               title: "Satz in eine andere Zeitform setzen",
               prompt: "Schreibe den Satz im Perfekt: Früher spielte Mira Klavier.",
               acceptedAnswers: [
-                "früher hat mira klavier gespielt",
-                "frueher hat mira klavier gespielt"
+                "Früher hat Mira Klavier gespielt.",
+                "Mira hat früher Klavier gespielt."
               ],
               hint: "Das Vollverb heißt im Partizip II 'gespielt'.",
               solution: "Früher hat Mira Klavier gespielt.",
@@ -921,7 +943,7 @@
             dragdrop({
               id: "p8-dd",
               title: "Futur im Kontext ordnen",
-              prompt: "Ordne die Satzteile zu einem korrekten Satz im Futur I.",
+              prompt: "Ordne die Satzteile zu einem korrekten Satz im Futur I mit dem Verb 'zurückgeben'.",
               slots: [
                 { id: "start", label: "Zeitangabe" },
                 { id: "mitte", label: "Verb" },
@@ -949,10 +971,8 @@
               prompt: "Korrigiere den Satz so, dass die Zeitfolge stimmt.",
               context: "Bevor ich esse, hatte ich mir die Hände gewaschen.",
               acceptedAnswers: [
-                "bevor ich aß hatte ich mir die hände gewaschen",
-                "bevor ich aß, hatte ich mir die hände gewaschen",
-                "bevor ich ass hatte ich mir die haende gewaschen",
-                "bevor ich ass, hatte ich mir die haende gewaschen"
+                "Bevor ich aß, hatte ich mir die Hände gewaschen.",
+                "Ich hatte mir die Hände gewaschen, bevor ich aß."
               ],
               hint: "Wenn der Hauptsatz in der Vergangenheit steht, muss auch der Nebensatz dazu passen.",
               solution: "Bevor ich aß, hatte ich mir die Hände gewaschen.",
