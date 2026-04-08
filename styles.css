@@ -114,9 +114,14 @@ body::before {
 
 .hero {
   display: grid;
-  grid-template-columns: minmax(0, 1.22fr) minmax(320px, 0.78fr);
+  grid-template-columns: minmax(0, 1.18fr) minmax(320px, 0.82fr);
   gap: 24px;
   margin-bottom: 22px;
+}
+
+.hero-copy,
+.hero-side {
+  min-width: 0;
 }
 
 .hero h1,
@@ -132,8 +137,11 @@ body::before {
 }
 
 .hero h1 {
-  font-size: clamp(3rem, 8vw, 5.4rem);
-  line-height: 0.92;
+  max-width: 11ch;
+  font-size: clamp(3rem, 6.6vw, 4.85rem);
+  line-height: 0.94;
+  text-wrap: balance;
+  overflow-wrap: anywhere;
 }
 
 .hero-lead,

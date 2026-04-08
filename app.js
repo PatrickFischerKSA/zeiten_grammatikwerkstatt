@@ -251,6 +251,14 @@
     return student && student.moduleStates ? student.moduleStates[moduleId] : null;
   }
 
+  function isTeacherModeActive() {
+    return teacherAuthenticated;
+  }
+
+  function isModuleAccessible(moduleState) {
+    return Boolean(moduleState && (moduleState.unlocked || isTeacherModeActive()));
+  }
+
   function getNextModuleId(moduleId) {
     const index = catalog.moduleOrder.indexOf(moduleId);
     return index >= 0 ? catalog.moduleOrder[index + 1] || null : null;
@@ -763,7 +771,7 @@
           level.modules
             .map(function (module) {
               const moduleState = getModuleState(student, module.id);
-              const unlocked = moduleState.unlocked;
+              const unlocked = isModuleAccessible(moduleState);
               const statusLabel = unlocked
                 ? moduleState.passed
                   ? "Bestanden"
@@ -838,11 +846,13 @@
                 "</div>" +
                 '<p class="helper-text">' +
                 escapeHtml(
-                  unlocked
-                    ? "Nächstes Modul wird ab " + data.passThreshold + " % freigeschaltet."
-                    : "Dieses Modul wird erst freigeschaltet, wenn das vorige Modul mindestens " +
-                        data.passThreshold +
-                        " % erreicht."
+                  isTeacherModeActive()
+                    ? "Lehrer*innen-Modus: Alle Module sind zur Einsicht und Bearbeitung geöffnet."
+                    : unlocked
+                      ? "Nächstes Modul wird ab " + data.passThreshold + " % freigeschaltet."
+                      : "Dieses Modul wird erst freigeschaltet, wenn das vorige Modul mindestens " +
+                          data.passThreshold +
+                          " % erreicht."
                 ) +
                 "</p>" +
                 "</article>"
@@ -1074,7 +1084,7 @@
     const module = getModule(moduleId);
     const moduleState = getModuleState(student, moduleId);
 
-    if (!student || !module || !moduleState || !moduleState.unlocked) {
+    if (!student || !module || !moduleState || !isModuleAccessible(moduleState)) {
       return;
     }
 
