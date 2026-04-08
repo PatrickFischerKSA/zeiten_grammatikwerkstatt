@@ -1,6 +1,8 @@
 (function () {
   const data = window.MalAngabeWorkshopData;
   const STORAGE_KEY = "malangabe-werkstatt-state-v1";
+  const TEACHER_PASSWORD = "zeiten";
+  const TEACHER_SESSION_KEY = "malangabe-werkstatt-teacher-session";
 
   const catalog = buildCatalog();
   const elements = cacheElements();
@@ -8,6 +10,8 @@
   let state = loadState();
   let currentSession = null;
   let timerHandle = null;
+  let teacherAuthenticated = loadTeacherSession();
+  let teacherReturnView = "identity";
 
   function buildCatalog() {
     const levelsById = {};
@@ -43,6 +47,7 @@
       studentDashboardView: document.getElementById("studentDashboardView"),
       sessionView: document.getElementById("sessionView"),
       completionView: document.getElementById("completionView"),
+      teacherAccessView: document.getElementById("teacherAccessView"),
       teacherDashboardView: document.getElementById("teacherDashboardView"),
       studentNameInput: document.getElementById("studentNameInput"),
       studentList: document.getElementById("studentList"),
@@ -75,6 +80,7 @@
       completionBadgeRow: document.getElementById("completionBadgeRow"),
       completionMetrics: document.getElementById("completionMetrics"),
       registerButton: document.getElementById("registerButton"),
+      heroTeacherButton: document.getElementById("heroTeacherButton"),
       openTeacherButton: document.getElementById("openTeacherButton"),
       studentTeacherButton: document.getElementById("studentTeacherButton"),
       switchStudentButton: document.getElementById("switchStudentButton"),
@@ -88,7 +94,12 @@
       nextModuleButton: document.getElementById("nextModuleButton"),
       completionTeacherButton: document.getElementById("completionTeacherButton"),
       completionDashboardButton: document.getElementById("completionDashboardButton"),
+      teacherPasswordInput: document.getElementById("teacherPasswordInput"),
+      teacherAccessError: document.getElementById("teacherAccessError"),
+      unlockTeacherButton: document.getElementById("unlockTeacherButton"),
+      cancelTeacherAccessButton: document.getElementById("cancelTeacherAccessButton"),
       closeTeacherButton: document.getElementById("closeTeacherButton"),
+      logoutTeacherButton: document.getElementById("logoutTeacherButton"),
       resetAllButton: document.getElementById("resetAllButton")
     };
   }
@@ -194,6 +205,28 @@
   function saveState() {
     state = ensureStateShape(state);
     window.localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  }
+
+  function loadTeacherSession() {
+    try {
+      return window.sessionStorage.getItem(TEACHER_SESSION_KEY) === "1";
+    } catch (error) {
+      return false;
+    }
+  }
+
+  function saveTeacherSession(isActive) {
+    teacherAuthenticated = Boolean(isActive);
+
+    try {
+      if (teacherAuthenticated) {
+        window.sessionStorage.setItem(TEACHER_SESSION_KEY, "1");
+      } else {
+        window.sessionStorage.removeItem(TEACHER_SESSION_KEY);
+      }
+    } catch (error) {
+      teacherAuthenticated = Boolean(isActive);
+    }
   }
 
   function getStudentsSorted() {
@@ -951,7 +984,46 @@
     elements.studentDashboardView.hidden = viewName !== "dashboard";
     elements.sessionView.hidden = viewName !== "session";
     elements.completionView.hidden = viewName !== "completion";
+    elements.teacherAccessView.hidden = viewName !== "teacher-access";
     elements.teacherDashboardView.hidden = viewName !== "teacher";
+  }
+
+  function detectVisibleView() {
+    if (!elements.teacherDashboardView.hidden) {
+      return "teacher";
+    }
+
+    if (!elements.teacherAccessView.hidden) {
+      return "teacher-access";
+    }
+
+    if (!elements.completionView.hidden) {
+      return "completion";
+    }
+
+    if (!elements.sessionView.hidden) {
+      return "session";
+    }
+
+    if (!elements.studentDashboardView.hidden) {
+      return "dashboard";
+    }
+
+    return "identity";
+  }
+
+  function defaultReturnView() {
+    const visibleView = detectVisibleView();
+
+    if (visibleView !== "teacher" && visibleView !== "teacher-access") {
+      return visibleView;
+    }
+
+    if (currentSession) {
+      return "session";
+    }
+
+    return getActiveStudent() ? "dashboard" : "identity";
   }
 
   function renderApp(preferredView) {
@@ -960,8 +1032,17 @@
     const student = getActiveStudent();
 
     if (preferredView === "teacher") {
-      renderTeacherDashboard();
-      setView("teacher");
+      if (teacherAuthenticated) {
+        renderTeacherDashboard();
+        setView("teacher");
+      } else {
+        setView("teacher-access");
+      }
+      return;
+    }
+
+    if (preferredView === "teacher-access") {
+      setView("teacher-access");
       return;
     }
 
@@ -1559,9 +1640,52 @@
     setView("completion");
   }
 
+  function showTeacherAccess() {
+    elements.teacherPasswordInput.value = "";
+    elements.teacherAccessError.hidden = true;
+    setView("teacher-access");
+    window.requestAnimationFrame(function () {
+      elements.teacherPasswordInput.focus();
+    });
+  }
+
   function openTeacherView() {
+    teacherReturnView = defaultReturnView();
+
+    if (teacherAuthenticated) {
+      renderTeacherDashboard();
+      setView("teacher");
+      return;
+    }
+
+    showTeacherAccess();
+  }
+
+  function unlockTeacherAccess() {
+    const password = String(elements.teacherPasswordInput.value || "").trim().toLowerCase();
+
+    if (password !== TEACHER_PASSWORD) {
+      elements.teacherAccessError.hidden = false;
+      elements.teacherPasswordInput.focus();
+      elements.teacherPasswordInput.select();
+      return;
+    }
+
+    saveTeacherSession(true);
+    elements.teacherAccessError.hidden = true;
+    elements.teacherPasswordInput.value = "";
     renderTeacherDashboard();
     setView("teacher");
+  }
+
+  function closeTeacherAccess() {
+    renderApp(teacherReturnView);
+  }
+
+  function logoutTeacher() {
+    saveTeacherSession(false);
+    teacherReturnView = getActiveStudent() ? "dashboard" : "identity";
+    renderApp(teacherReturnView);
   }
 
   function leaveSessionToDashboard() {
@@ -1590,12 +1714,21 @@
       }
     });
 
+    elements.heroTeacherButton.addEventListener("click", openTeacherView);
     elements.openTeacherButton.addEventListener("click", openTeacherView);
     elements.studentTeacherButton.addEventListener("click", openTeacherView);
     elements.completionTeacherButton.addEventListener("click", openTeacherView);
-    elements.closeTeacherButton.addEventListener("click", function () {
-      renderApp();
+    elements.teacherPasswordInput.addEventListener("keydown", function (event) {
+      if (event.key === "Enter") {
+        unlockTeacherAccess();
+      }
     });
+    elements.unlockTeacherButton.addEventListener("click", unlockTeacherAccess);
+    elements.cancelTeacherAccessButton.addEventListener("click", closeTeacherAccess);
+    elements.closeTeacherButton.addEventListener("click", function () {
+      renderApp(teacherReturnView);
+    });
+    elements.logoutTeacherButton.addEventListener("click", logoutTeacher);
 
     elements.switchStudentButton.addEventListener("click", function () {
       state.activeStudentId = null;

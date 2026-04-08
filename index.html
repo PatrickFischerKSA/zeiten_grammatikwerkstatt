@@ -3,10 +3,10 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Mal-Angabe Werkstatt</title>
+  <title>Grammatikwerkstatt Zeiten</title>
   <meta
     name="description"
-    content="Interaktive Lernwerkstatt zu Mal-Angaben mit vier Niveaus, Modulfreischaltung, Sofortfeedback und Lehrer*innen-Dashboard."
+    content="Grammatikwerkstatt Zeiten mit vier Niveaus, Modulfreischaltung, Sofortfeedback und passwortgeschütztem Lehrer*innen-Dashboard."
   >
   <link rel="stylesheet" href="styles.css">
 </head>
@@ -18,7 +18,8 @@
     <header class="hero surface">
       <div class="hero-copy">
         <p class="eyebrow">Interaktive DaZ-Lernwerkstatt</p>
-        <h1>Mal-Angabe</h1>
+        <h1>Grammatikwerkstatt Zeiten</h1>
+        <p class="hero-focus">Schwerpunkt: Mal-Angaben</p>
         <p class="hero-lead">
           Vier Niveaus, gestufte Rückmeldung und klare Freischaltlogik: Lernende arbeiten sich
           Modul für Modul durch Freitext, Drag and Drop, Lückentext, Fehlertext und Erklärungen.
@@ -28,7 +29,7 @@
           <span>8 Module</span>
           <span>40 Aufgaben</span>
           <span>ab 60 % freigeschaltet</span>
-          <span>Lehrer*innen-Dashboard</span>
+          <button id="heroTeacherButton" class="tag-button" type="button">Lehrer*innen-Zugang</button>
           <span>Bronze · Silber · Gold</span>
         </div>
       </div>
@@ -51,7 +52,7 @@
             <p class="section-label">Anmeldung</p>
             <h2>Mit Namen registrieren</h2>
           </div>
-          <button id="openTeacherButton" class="button button-ghost" type="button">Lehrer*innen-Dashboard</button>
+          <button id="openTeacherButton" class="button button-ghost" type="button">Lehrer*innen-Zugang</button>
         </div>
 
         <div class="identity-grid">
@@ -68,6 +69,44 @@
           <article class="surface-inset existing-card">
             <h3>Vorhandene Profile</h3>
             <div id="studentList" class="student-list"></div>
+          </article>
+        </div>
+      </section>
+
+      <section id="teacherAccessView" class="surface" hidden>
+        <div class="section-head">
+          <div>
+            <p class="section-label">Lehrer*innen-Zugang</p>
+            <h2>Dashboard mit Passwort öffnen</h2>
+          </div>
+          <button id="cancelTeacherAccessButton" class="button button-ghost" type="button">Zurück</button>
+        </div>
+
+        <div class="teacher-access-layout">
+          <article class="surface-inset teacher-access-card">
+            <h3>Lehrkräfte-Eingang</h3>
+            <label class="field-label" for="teacherPasswordInput">Passwort</label>
+            <input
+              id="teacherPasswordInput"
+              class="text-field"
+              type="password"
+              autocomplete="current-password"
+              placeholder="Passwort eingeben"
+            >
+            <p id="teacherAccessError" class="helper-text helper-text-error" hidden>Das Passwort ist nicht korrekt.</p>
+            <div class="toolbar-row">
+              <button id="unlockTeacherButton" class="button button-primary" type="button">Dashboard öffnen</button>
+            </div>
+          </article>
+
+          <article class="surface-inset teacher-access-note">
+            <h3>Hinweis</h3>
+            <p class="helper-text">
+              Der Lehrkräfte-Bereich zeigt alle Profile, Lernstände, freigeschalteten Module und erreichten Badges.
+            </p>
+            <p class="helper-text">
+              Der Zugang ist passwortgeschützt und bleibt nur auf diesem Gerät für die aktuelle Sitzung geöffnet.
+            </p>
           </article>
         </div>
       </section>
@@ -197,6 +236,7 @@
           </div>
           <div class="toolbar-row">
             <button id="closeTeacherButton" class="button button-ghost" type="button">Schließen</button>
+            <button id="logoutTeacherButton" class="button button-ghost" type="button">Abmelden</button>
             <button id="resetAllButton" class="button button-ghost" type="button">Alle Daten löschen</button>
           </div>
         </div>
