@@ -7,8 +7,9 @@
   const catalog = buildCatalog();
   const elements = cacheElements();
 
-  let state = loadState();
   let currentSession = null;
+  let state = loadState();
+  currentSession = restoreCurrentSession(state.currentSession);
   let timerHandle = null;
   let teacherAuthenticated = loadTeacherSession();
   let teacherReturnView = "identity";
@@ -139,7 +140,8 @@
     return {
       version: 1,
       activeStudentId: null,
-      students: {}
+      students: {},
+      currentSession: null
     };
   }
 
@@ -187,6 +189,10 @@
       safe.activeStudentId = null;
     }
 
+    if (!safe.currentSession || typeof safe.currentSession !== "object") {
+      safe.currentSession = null;
+    }
+
     return safe;
   }
 
@@ -204,7 +210,81 @@
 
   function saveState() {
     state = ensureStateShape(state);
+    state.currentSession = currentSession ? clone(currentSession) : null;
     window.localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  }
+
+  function restoreCurrentSession(snapshot) {
+    if (!snapshot || typeof snapshot !== "object") {
+      return null;
+    }
+
+    if (!snapshot.studentId || !state.students[snapshot.studentId]) {
+      return null;
+    }
+
+    const module = getModule(snapshot.moduleId);
+    if (!module || !Array.isArray(module.tasks) || module.tasks.length === 0) {
+      return null;
+    }
+
+    const tasksById = {};
+    module.tasks.forEach(function (task) {
+      tasksById[task.id] = task;
+    });
+
+    const orderedTasks =
+      Array.isArray(snapshot.tasks) &&
+      snapshot.tasks.length === module.tasks.length &&
+      snapshot.tasks.every(function (entry) {
+        return entry && entry.task && tasksById[entry.task.id];
+      })
+        ? snapshot.tasks.map(function (entry) {
+            return { task: tasksById[entry.task.id] };
+          })
+        : module.tasks.map(function (moduleTask) {
+            return { task: moduleTask };
+          });
+
+    const safeIndex = Math.min(
+      Math.max(Number(snapshot.index) || 0, 0),
+      Math.max(orderedTasks.length - 1, 0)
+    );
+    const task = orderedTasks[safeIndex].task;
+
+    return {
+      studentId: snapshot.studentId,
+      moduleId: snapshot.moduleId,
+      tasks: orderedTasks,
+      index: safeIndex,
+      attempts: Math.max(0, Number(snapshot.attempts) || 0),
+      resolved: Boolean(snapshot.resolved),
+      answerState:
+        snapshot.answerState && typeof snapshot.answerState === "object"
+          ? snapshot.answerState
+          : makeAnswerState(task),
+      feedbackPayload:
+        snapshot.feedbackPayload && typeof snapshot.feedbackPayload === "object"
+          ? snapshot.feedbackPayload
+          : null,
+      results: Array.isArray(snapshot.results) ? snapshot.results : [],
+      startedAt: Number(snapshot.startedAt) || Date.now(),
+      completionReady: Boolean(snapshot.completionReady),
+      currentViewTask:
+        snapshot.currentViewTask &&
+        typeof snapshot.currentViewTask === "object" &&
+        snapshot.currentViewTask.id === task.id
+          ? snapshot.currentViewTask
+          : prepareTaskView(task)
+    };
+  }
+
+  function persistCurrentSession() {
+    if (currentSession && state.students[currentSession.studentId]) {
+      state.students[currentSession.studentId].lastActiveAt = new Date().toISOString();
+    }
+
+    saveState();
   }
 
   function loadTeacherSession() {
@@ -307,6 +387,9 @@
     state.students[student.id].id = student.id;
     state.students[student.id].createdAt = student.createdAt;
     state.activeStudentId = student.id;
+    if (currentSession && currentSession.studentId === student.id) {
+      currentSession = null;
+    }
     saveState();
     renderApp();
   }
@@ -320,8 +403,8 @@
     }
 
     state = createDefaultState();
-    saveState();
     currentSession = null;
+    saveState();
     stopTimer();
     renderApp("identity");
   }
@@ -841,7 +924,15 @@
                 '" type="button" ' +
                 (unlocked ? "" : "disabled") +
                 ">" +
-                escapeHtml(moduleState.completed ? "Modul wiederholen" : "Modul starten") +
+                escapeHtml(
+                  currentSession &&
+                    currentSession.studentId === student.id &&
+                    currentSession.moduleId === module.id
+                    ? "Modul fortsetzen"
+                    : moduleState.completed
+                      ? "Modul wiederholen"
+                      : "Modul starten"
+                ) +
                 "</button>" +
                 "</div>" +
                 '<p class="helper-text">' +
@@ -1063,6 +1154,12 @@
       return;
     }
 
+    if (preferredView === "session" && currentSession && currentSession.studentId === student.id) {
+      startTimer();
+      renderSession();
+      return;
+    }
+
     renderStudentDashboard();
     setView(preferredView === "completion" ? "completion" : "dashboard");
   }
@@ -1088,25 +1185,36 @@
       return;
     }
 
+    if (currentSession && currentSession.studentId === student.id && currentSession.moduleId === moduleId) {
+      if (!currentSession.currentViewTask || currentSession.currentViewTask.id !== currentTask().id) {
+        currentSession.currentViewTask = prepareTaskView(currentTask());
+      }
+      persistCurrentSession();
+      startTimer();
+      renderSession();
+      return;
+    }
+
+    const shuffledTasks = shuffle(module.tasks).map(function (task) {
+      return { task: task };
+    });
+
     currentSession = {
       studentId: student.id,
       moduleId: moduleId,
-      tasks: module.tasks.map(function (task) {
-        return { task: task };
-      }),
+      tasks: shuffledTasks,
       index: 0,
       attempts: 0,
       resolved: false,
-      answerState: makeAnswerState(module.tasks[0]),
+      answerState: makeAnswerState(shuffledTasks[0].task),
       feedbackPayload: null,
       results: [],
       startedAt: Date.now(),
       completionReady: false,
-      currentViewTask: prepareTaskView(module.tasks[0])
+      currentViewTask: prepareTaskView(shuffledTasks[0].task)
     };
 
-    state.students[student.id].lastActiveAt = new Date().toISOString();
-    saveState();
+    persistCurrentSession();
     startTimer();
     renderSession();
   }
@@ -1369,6 +1477,7 @@
       if (input) {
         input.addEventListener("input", function () {
           currentSession.answerState.text = input.value;
+          persistCurrentSession();
         });
       }
     }
@@ -1377,6 +1486,7 @@
       Array.from(elements.taskWorkspace.querySelectorAll("[data-blank-id]")).forEach(function (input) {
         input.addEventListener("input", function () {
           currentSession.answerState.blankValues[input.getAttribute("data-blank-id")] = input.value;
+          persistCurrentSession();
         });
       });
     }
@@ -1385,11 +1495,13 @@
       Array.from(elements.taskWorkspace.querySelectorAll("[data-option-id]")).forEach(function (button) {
         button.addEventListener("click", function () {
           currentSession.answerState.selectedOptionId = button.getAttribute("data-option-id");
+          persistCurrentSession();
           renderSession();
         });
 
         button.addEventListener("dragstart", function (event) {
           currentSession.answerState.selectedOptionId = button.getAttribute("data-option-id");
+          persistCurrentSession();
           event.dataTransfer.setData("text/plain", currentSession.answerState.selectedOptionId);
         });
       });
@@ -1402,6 +1514,7 @@
           }
           currentSession.answerState.dragMap[target.getAttribute("data-slot-target")] = selectedOptionId;
           currentSession.answerState.selectedOptionId = null;
+          persistCurrentSession();
           renderSession();
         });
 
@@ -1418,6 +1531,7 @@
           }
           currentSession.answerState.dragMap[target.getAttribute("data-slot-target")] = optionId;
           currentSession.answerState.selectedOptionId = null;
+          persistCurrentSession();
           renderSession();
         });
       });
@@ -1426,6 +1540,7 @@
         button.addEventListener("click", function () {
           const slotId = button.getAttribute("data-clear-slot");
           delete currentSession.answerState.dragMap[slotId];
+          persistCurrentSession();
           renderSession();
         });
       });
@@ -1485,6 +1600,7 @@
         showSolution: false,
         statusClass: "status-hint"
       };
+      persistCurrentSession();
       renderSession();
       return;
     }
@@ -1499,18 +1615,21 @@
         outcome: "solved",
         attempts: currentSession.attempts
       });
+      persistCurrentSession();
       renderSession();
       return;
     }
 
     if (currentSession.attempts === 1) {
       currentSession.feedbackPayload = feedbackPayload("wrong-1");
+      persistCurrentSession();
       renderSession();
       return;
     }
 
     if (currentSession.attempts === 2) {
       currentSession.feedbackPayload = feedbackPayload("wrong-2");
+      persistCurrentSession();
       renderSession();
       return;
     }
@@ -1522,6 +1641,7 @@
       outcome: "failed",
       attempts: currentSession.attempts
     });
+    persistCurrentSession();
     renderSession();
   }
 
@@ -1532,6 +1652,7 @@
 
     currentSession.answerState = makeAnswerState(currentTask());
     currentSession.feedbackPayload = null;
+    persistCurrentSession();
     if (!currentSession.resolved) {
       renderSession();
     } else {
@@ -1547,6 +1668,7 @@
     currentSession.answerState = makeAnswerState(currentTask());
     currentSession.feedbackPayload = null;
     currentSession.currentViewTask = prepareTaskView(currentTask());
+    persistCurrentSession();
     renderSession();
   }
 
@@ -1566,6 +1688,7 @@
     currentSession.feedbackPayload = null;
     currentSession.answerState = makeAnswerState(currentTask());
     currentSession.currentViewTask = prepareTaskView(currentTask());
+    persistCurrentSession();
     renderSession();
   }
 
@@ -1623,6 +1746,7 @@
     }
 
     student.lastActiveAt = new Date().toISOString();
+    currentSession = null;
     saveState();
     stopTimer();
 
@@ -1646,7 +1770,6 @@
     elements.nextModuleButton.disabled = !(passed && nextModuleId);
     elements.nextModuleButton.setAttribute("data-next-module-id", nextModuleId || "");
 
-    currentSession = null;
     setView("completion");
   }
 
@@ -1704,16 +1827,9 @@
       return;
     }
 
-    const confirmed = window.confirm(
-      "Das aktuelle Modul ist noch nicht abgeschlossen. Wirklich zur Übersicht wechseln?"
-    );
-    if (!confirmed) {
-      return;
-    }
-
-    currentSession = null;
     stopTimer();
-    renderApp();
+    persistCurrentSession();
+    renderApp("dashboard");
   }
 
   function bindStaticEvents() {

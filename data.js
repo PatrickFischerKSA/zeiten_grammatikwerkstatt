@@ -58,18 +58,37 @@
     return JSON.parse(JSON.stringify(value));
   }
 
-  function replaceText(value) {
-    return String(value);
+  function escapeRegExp(value) {
+    return String(value).replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
   }
 
-  function transformValue(value) {
+  function replaceExactPhrase(text, source, target) {
+    const boundary = "(^|[^A-Za-zÄÖÜäöüß])";
+    const pattern = new RegExp(boundary + escapeRegExp(source) + "(?=$|[^A-Za-zÄÖÜäöüß])", "g");
+
+    return String(text).replace(pattern, function (match, prefix) {
+      return prefix + target;
+    });
+  }
+
+  function replaceText(value, replacements) {
+    return Object.keys(replacements || {})
+      .sort(function (left, right) {
+        return right.length - left.length;
+      })
+      .reduce(function (text, key) {
+        return replaceExactPhrase(text, key, replacements[key]);
+      }, String(value));
+  }
+
+  function transformValue(value, replacements) {
     if (typeof value === "string") {
-      return replaceText(value);
+      return replaceText(value, replacements);
     }
 
     if (Array.isArray(value)) {
       return value.map(function (entry) {
-        return transformValue(entry);
+        return transformValue(entry, replacements);
       });
     }
 
@@ -77,7 +96,7 @@
       const copy = {};
 
       Object.keys(value).forEach(function (key) {
-        copy[key] = key === "id" ? value[key] : transformValue(value[key]);
+        copy[key] = key === "id" ? value[key] : transformValue(value[key], replacements);
       });
 
       return copy;
@@ -108,7 +127,40 @@
         Bahnhof: "Busbahnhof",
         Schule: "Sprachschule",
         Klasse: "Lerngruppe",
-        Gruppe: "Kurs"
+        Gruppe: "Kurs",
+        Deutsch: "Französisch",
+        spielen: "trainieren",
+        gespielt: "trainiert",
+        Park: "Garten",
+        Hausaufgaben: "Übungen",
+        Film: "Krimi",
+        "nach Hause": "zur Schule",
+        Zeit: "Geduld",
+        Lehrer: "Trainer",
+        Bus: "Zug",
+        Bett: "Kino",
+        Geschichten: "Romanen",
+        Berichten: "Reportagen",
+        vorbereiten: "sortieren",
+        vorbereitet: "sortiert",
+        frühstücken: "kochen",
+        gefrühstückt: "gekocht",
+        frühstückt: "kocht",
+        spazieren: "einkaufen",
+        "früh aufstehen": "lange lernen",
+        fernsehen: "Musik hören",
+        ausschlafen: "länger schlafen",
+        Kino: "Museum",
+        Prüfung: "Test",
+        studieren: "arbeiten",
+        Bericht: "Brief",
+        Projekt: "Kapitel",
+        Tante: "Großmutter",
+        krank: "müde",
+        "zu Hause": "daheim",
+        Klavier: "Gitarre",
+        Taxi: "Auto",
+        zurückgeben: "einsammeln"
       }
     },
     {
@@ -127,7 +179,40 @@
         Bahnhof: "Haltestelle",
         Schule: "Berufsschule",
         Klasse: "Gruppe",
-        Gruppe: "Seminargruppe"
+        Gruppe: "Seminargruppe",
+        Deutsch: "Englisch",
+        spielen: "tanzen",
+        gespielt: "getanzt",
+        Park: "Wald",
+        Hausaufgaben: "Notizen",
+        Film: "Dokumentarfilm",
+        "nach Hause": "zur Arbeit",
+        Zeit: "Ruhe",
+        Lehrer: "Nachbar",
+        Bus: "Lieferwagen",
+        Bett: "Büro",
+        Geschichten: "Erzählungen",
+        Berichten: "Zeitungsartikeln",
+        vorbereiten: "ordnen",
+        vorbereitet: "geordnet",
+        frühstücken: "lernen",
+        gefrühstückt: "gelernt",
+        frühstückt: "lernt",
+        spazieren: "trainieren",
+        "früh aufstehen": "viel üben",
+        fernsehen: "Rad fahren",
+        ausschlafen: "singen",
+        Kino: "Schwimmbad",
+        Prüfung: "Wettbewerb",
+        studieren: "wohnen",
+        Bericht: "Text",
+        Projekt: "Plakat",
+        Tante: "Schwester",
+        krank: "erkältet",
+        "zu Hause": "im Bett",
+        Klavier: "Geige",
+        Taxi: "Mietauto",
+        zurückgeben: "korrigieren"
       }
     },
     {
@@ -146,13 +231,46 @@
         Bahnhof: "Zugbahnhof",
         Schule: "Abendschule",
         Klasse: "AG",
-        Gruppe: "Lerngruppe"
+        Gruppe: "Lerngruppe",
+        Deutsch: "Wortschatz",
+        spielen: "malen",
+        gespielt: "gemalt",
+        Park: "Schulhof",
+        Hausaufgaben: "Matheaufgaben",
+        Film: "Horrorfilm",
+        "nach Hause": "ins Büro",
+        Zeit: "Kraft",
+        Lehrer: "Chef",
+        Bus: "Tram",
+        Bett: "Wohnzimmer",
+        Geschichten: "Chroniken",
+        Berichten: "Meldungen",
+        vorbereiten: "aufräumen",
+        vorbereitet: "aufgeräumt",
+        frühstücken: "telefonieren",
+        gefrühstückt: "telefoniert",
+        frühstückt: "telefoniert",
+        spazieren: "schwimmen",
+        "früh aufstehen": "pünktlich losfahren",
+        fernsehen: "lesen",
+        ausschlafen: "trainieren",
+        Kino: "Training",
+        Prüfung: "Kurs",
+        studieren: "lernen",
+        Bericht: "Protokoll",
+        Projekt: "Referat",
+        Tante: "Cousine",
+        krank: "erschöpft",
+        "zu Hause": "im Zimmer",
+        Klavier: "Keyboard",
+        Taxi: "Mietwagen",
+        zurückgeben: "verteilen"
       }
     }
   ];
 
   function createTaskVariant(task, variant) {
-    const copy = cloneValue(task);
+    const copy = transformValue(cloneValue(task), variant.replacements);
     copy.id = task.id + variant.suffix;
     copy.title = String(copy.title || task.title || "") + variant.titleSuffix;
     return copy;
